@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLang } from '../context/LangContext.jsx';
+import logo from '../assets/logo.png';
 
 export default function Navbar({ currentPage, onNav }) {
   const { t, lang, setLang, translations } = useLang(); // Fixed: useLang returns an object
@@ -49,7 +50,7 @@ export default function Navbar({ currentPage, onNav }) {
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
         <div className="nav-main">
           <div className="logo" onClick={() => onNav('home')}>
-            <img src="/src/assets/logo.png" alt="HelpLine Finance Logo" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
+            <img src={logo} alt="HelpLine Finance Logo" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
             <div className="logo-text">
               <div className="brand" style={{ color: '#1565C0', fontSize: '20px' }}>HelpLine</div>
               <div className="sub" style={{ color: '#666', fontSize: '14px', fontWeight: 600, marginTop: '-2px' }}>Finance</div>

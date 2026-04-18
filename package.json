@@ -1,6 +1,7 @@
 {
   "name": "react-project",
   "version": "1.0.0",
+  "homepage": "https://govarathan.github.io/helpline_website_new1/",
   "private": true,
   "scripts": {
     "dev": "vite",
