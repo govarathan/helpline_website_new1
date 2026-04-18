@@ -10,10 +10,10 @@ export default function Footer({ onNav }) {
         <div className="footer-brand">
           <div className="footer-brand-logo">
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div className="logo-icon">₹</div>
+              <img src="/src/assets/logo.png" alt="HelpLine Finance Logo" style={{ width: '42px', height: '42px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
               <div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '15px', fontWeight: 700, color: 'white' }}>HelpLine Finance</div>
-                <div style={{ fontSize: '10px', color: 'rgba(255,255,255,.4)' }}>Private Limited</div>
+                <div style={{ fontFamily: "Inter, sans-serif", fontSize: '15px', fontWeight: 700, color: 'white' }}>HelpLine</div>
+                <div style={{ fontSize: '10px', color: 'rgba(255,255,255,.4)', fontWeight: 600 }}>Finance</div>
               </div>
             </div>
           </div>
@@ -36,8 +36,8 @@ export default function Footer({ onNav }) {
         <div className="footer-col">
           <h5>{t.footer.services2}</h5>
           <ul>
-            {[['pf','Private Finance'],['nri','NRI Loans'],['cibil','Low CIBIL Loan'],['cheq','Cheque Basis'],['rec','Private Recovery'],['drt','DRT Legal']].map(([key, label]) => (
-              <li key={key}><span onClick={() => go(key)}>{label}</span></li>
+            {t.services.items.map((item, i) => (
+              <li key={i}><span onClick={() => go(item.page)}>{item.title}</span></li>
             ))}
           </ul>
         </div>
@@ -45,14 +45,13 @@ export default function Footer({ onNav }) {
         <div className="footer-col">
           <h5>{t.footer.contactInfo}</h5>
           <p className="footer-addr">
-            AKR Corniche Center No.30/11<br/>
-            Second Line Beach, George Town<br/>
-            Chennai – 600 001<br/><br/>
+            {t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}<br/></span>)}
+            <br/>
             <a href="tel:8098096666">+91 809 809 6666</a><br/>
-            Mon–Sat: 9:00 AM – 6:00 PM
+            {t.contact.hours}
           </p>
           <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa" style={{ marginTop: '14px', display: 'inline-flex', fontSize: '12.5px', padding: '8px 16px' }}>
-            💬 WhatsApp Us
+            💬 {t.nav.whatsapp || 'WhatsApp Us'}
           </a>
         </div>
       </div>

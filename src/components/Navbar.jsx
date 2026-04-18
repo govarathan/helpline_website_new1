@@ -47,23 +47,12 @@ export default function Navbar({ currentPage, onNav }) {
   return (
     <>
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
-        <div className="nav-topbar">
-          <div className="nav-tl">
-            <div className="nav-ti">📞 <a href="tel:8098096666">+91 809 809 6666</a></div>
-            <div className="nav-divider"></div>
-            <div className="nav-ti">✉️ <a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div>
-          </div>
-          <div className="nav-tr">
-            <div className="nav-ti">Mon–Sat: 9 AM – 6 PM</div>
-          </div>
-        </div>
-
         <div className="nav-main">
-          <div className="logo" onClick={() => navTo('home')}>
-            <div className="logo-icon">₹</div>
+          <div className="logo" onClick={() => onNav('home')}>
+            <img src="/src/assets/logo.png" alt="HelpLine Finance Logo" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
             <div className="logo-text">
-              <div className="brand">HelpLine Finance</div>
-              <div className="sub">Private Limited</div>
+              <div className="brand" style={{ color: '#1565C0', fontSize: '20px' }}>HelpLine</div>
+              <div className="sub" style={{ color: '#666', fontSize: '14px', fontWeight: 600, marginTop: '-2px' }}>Finance</div>
             </div>
           </div>
 
@@ -125,8 +114,8 @@ export default function Navbar({ currentPage, onNav }) {
           </div>
 
           <div className="nav-actions">
-            <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-sm">💬 {t.nav?.whatsapp || 'WhatsApp'}</a>
-            <button className="btn btn-gold" onClick={() => navTo('contact')}>{t.nav?.apply || 'Apply Now'}</button>
+            <button className="btn btn-gold btn-sm" onClick={() => navTo('partner')} style={{ marginRight: '8px' }}>🤝 {t.nav?.partner || 'Partner With Us'}</button>
+            <button className="btn btn-primary" onClick={() => navTo('contact')} style={{ marginLeft: '12px' }}>{t.nav?.apply || 'Apply Now'}</button>
           </div>
 
           <button className="hamburger" onClick={() => setMobileOpen(true)}>

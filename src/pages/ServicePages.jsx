@@ -1,4 +1,5 @@
-import { useLang } from '/src/context/LangContext.jsx';
+import { useState } from 'react';
+import { useLang } from '../context/LangContext.jsx';
 
 function PageHero({ title, subtitle, breadcrumbs, onNav }) {
   return (
@@ -192,8 +193,7 @@ export function NriLoansPage({ onNav }) {
   );
 }
 
-// NRI needs useState
-import { useState } from 'react';
+
 
 export function InvestmentLoanPage({ onNav }) {
   return (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLang } from '/src/context/LangContext.jsx';
+import { useLang } from '../context/LangContext.jsx';
 
 function PageHero({ title, subtitle, breadcrumbs, onNav }) {
   return (
@@ -23,24 +23,22 @@ export function AboutPage({ onNav }) {
   const { t } = useLang();
   return (
     <div>
-      <PageHero title={t.about.title} subtitle="Connecting MSMEs to the right financiers since 2017." breadcrumbs={[{ label: t.nav?.about || 'About Us' }]} onNav={onNav} />
+      <PageHero title={t.about.title} subtitle={t.hero.desc} breadcrumbs={[{ label: t.nav?.about || 'About Us' }]} onNav={onNav} />
 
       <section className="section">
         <div className="wrap grid-2">
           <div data-sr>
-            <div className="label-tag">Our Story</div>
-            <h2 className="section-title">Who We Are</h2>
+            <div className="label-tag">{t.about.label}</div>
+            <h2 className="section-title">{t.about.title}</h2>
             <div className="about-text">
-              <p>HelpLine Finance started in 2017 focused on meeting the financial needs of micro, small and medium enterprises — a segment that has remained underserved despite several government initiatives.</p>
-              <p>Run by experts with rich experience in financial services, we are in link with <strong>85% of private financiers in Chennai and Tamil Nadu</strong>, making credit accessible with speed and care.</p>
-              <p>We act as a bridge between borrowers and the right financiers — understanding the specific needs of each client and matching them with the most suitable financial institution or private financier in our extensive network.</p>
-              <p>Our commitment: transparent dealings, minimal paperwork, and fast disbursement. We serve clients across Tamil Nadu, Pondicherry, Karnataka, and Kerala.</p>
+              <p>{t.about.p1}</p>
+              <p>{t.about.p2}</p>
             </div>
           </div>
           <div data-sr data-sr-d="2">
             <div className="about-panel">
-              <div className="panel-head">Key Facts</div>
-              {[['Founded', '2017 — Chennai, Tamil Nadu'], ['Specialisation', 'MSME Financial Intermediary'], ['Network', '85% of private financiers in TN'], ['Coverage', 'TN, Pondicherry, Karnataka, Kerala'], ['Processing', '48 hours (standard unsecured)'], ['Clients', '20,000+ families helped']].map(([l, v]) => (
+              <div className="panel-head">{t.about.panelTitle || 'Key Facts'}</div>
+              {[[t.about.f1t, t.about.f1d], [t.about.f2t, t.about.f2d], [t.about.f3t, t.about.f3d], [t.about.f4t, t.about.f4d]].map(([l, v]) => (
                 <div key={l} className="loan-list-item">
                   <span style={{ color: 'var(--gold)', marginRight: '8px', fontWeight: 700 }}>▸</span>
                   <span style={{ color: 'rgba(255,255,255,.5)', minWidth: '100px', display: 'inline-block' }}>{l}:</span>
@@ -66,14 +64,14 @@ export function AboutPage({ onNav }) {
       <section className="section">
         <div className="wrap">
           <div data-sr style={{ textAlign: 'center', maxWidth: '560px', margin: '0 auto 0' }}>
-            <div className="label-tag" style={{ justifyContent: 'center' }}>Our Foundation</div>
-            <h2 className="section-title" style={{ textAlign: 'center' }}>Vision, Mission & Values</h2>
+            <div className="label-tag" style={{ justifyContent: 'center' }}>{t.about.foundation}</div>
+            <h2 className="section-title" style={{ textAlign: 'center' }}>{t.about.vmv}</h2>
           </div>
           <div className="val-grid">
             {[
-              { ico: '🔭', title: 'Vision', text: 'To be the most trusted financial intermediary for MSMEs across South India, enabling every deserving business to access the credit they need to grow.' },
-              { ico: '🎯', title: 'Mission', text: 'To connect micro, small and medium enterprises with the right financial partners through our extensive network, providing transparent, fast, and personalised financial solutions.' },
-              { ico: '⚖️', title: 'Values', text: 'Transparency in every dealing. Speed in every process. Integrity in every relationship. We believe every MSME deserves a fair chance at growth.' },
+              { ico: '🔭', title: t.about.vTitle, text: t.about.vision },
+              { ico: '🎯', title: t.about.mTitle, text: t.about.mission },
+              { ico: '⚖️', title: t.about.valTitle, text: t.about.values },
             ].map(v => (
               <div key={v.title} className="val-card" data-sr>
                 <div className="ico">{v.ico}</div>
@@ -87,15 +85,15 @@ export function AboutPage({ onNav }) {
 
       <section className="section" style={{ background: 'var(--grey-50)' }}>
         <div className="wrap" style={{ textAlign: 'center' }}>
-          <div className="label-tag" style={{ justifyContent: 'center' }}>Registered Office</div>
-          <h2 className="section-title" style={{ textAlign: 'center' }}>Where We Are</h2>
+          <div className="label-tag" style={{ justifyContent: 'center' }}>{t.about.office}</div>
+          <h2 className="section-title" style={{ textAlign: 'center' }}>{t.about.location}</h2>
           <div style={{ maxWidth: '500px', margin: '24px auto 0' }}>
             <div className="info-card" style={{ textAlign: 'left' }}>
               <div className="info-card-head">HelpLine Finance Private Limited</div>
-              <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">AKR Corniche Center No.30/11<br/>Second Line Beach, George Town<br/>Chennai – 600 001</div></div></div>
+              <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">{t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}{i < 2 ? <br/> : ''}</span>)}</div></div></div>
               <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">Phone</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
               <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">Email</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
-              <button className="btn btn-gold btn-block" onClick={() => onNav('contact')} style={{ marginTop: '14px' }}>Get in Touch →</button>
+              <button className="btn btn-gold btn-block" onClick={() => onNav('contact')} style={{ marginTop: '14px' }}>{t.about.panelCta}</button>
             </div>
           </div>
         </div>
@@ -105,11 +103,12 @@ export function AboutPage({ onNav }) {
 }
 
 export function DocumentsPage({ onNav }) {
+  const { t } = useLang();
   const [tab, setTab] = useState('sal');
-  const tabs = [['sal', 'Salaried'], ['self', 'Self-Employed'], ['prop', 'Property']];
+  const tabs = [['sal', t.docs.tabs.sal], ['self', t.docs.tabs.self], ['prop', t.docs.tabs.prop]];
   return (
     <div>
-      <PageHero title="Bank-NBFC Document Checklist" subtitle="Complete document requirements for salaried, self-employed, and property-backed loans." breadcrumbs={[{ label: 'Documents' }]} onNav={onNav} />
+      <PageHero title={t.docs.title} subtitle={t.docs.subtitle} breadcrumbs={[{ label: t.nav?.documents || 'Documents' }]} onNav={onNav} />
       <section className="section"><div className="wrap">
         <div className="doc-tabs">
           {tabs.map(([k, l]) => (
@@ -147,10 +146,10 @@ export function DocumentsPage({ onNav }) {
           </div>
         )}
         <div style={{ marginTop: '44px', padding: '26px', background: 'var(--sky-50)', border: '1px solid var(--sky-100)', borderRadius: 'var(--r-xl)' }}>
-          <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', lineHeight: 1.75 }}><strong style={{ color: 'var(--sky-900)' }}>Note:</strong> Document requirements may vary based on lender, loan type, and individual circumstances. Our team will provide a specific checklist for your exact requirement.</p>
+          <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', lineHeight: 1.75 }}><strong style={{ color: 'var(--sky-900)' }}>Note:</strong> {t.docs.note}</p>
           <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <button className="btn btn-primary" onClick={() => onNav('contact')}>Get Personalised Checklist →</button>
-            <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa">💬 WhatsApp Us</a>
+            <button className="btn btn-primary" onClick={() => onNav('contact')}>{t.docs.cta}</button>
+            <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa">💬 {t.nav?.whatsapp || 'WhatsApp Us'}</a>
           </div>
         </div>
       </div></section>
@@ -159,44 +158,51 @@ export function DocumentsPage({ onNav }) {
 }
 
 export function PartnerPage({ onNav }) {
+  const { t } = useLang();
   const [toast, setToast] = useState(false);
   const handleSubmit = (e) => { e.preventDefault(); setToast(true); e.target.reset(); setTimeout(() => setToast(false), 3600); };
   return (
     <div>
-      <PageHero title="Partner With HelpLine Finance" subtitle="Join our Organiser / DSA network and earn attractive commissions." breadcrumbs={[{ label: 'Partner With Us' }]} onNav={onNav} />
+      <PageHero title={t.partner.title} subtitle={t.partner.subtitle} breadcrumbs={[{ label: t.nav?.partner || 'Partner With Us' }]} onNav={onNav} />
       <section className="section"><div className="wrap">
         <div className="partner-grid">
           <div data-sr>
-            <div className="label-tag">Become an Organiser</div>
-            <h2 className="section-title">Grow Together</h2>
-            <p style={{ fontSize: '15px', color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '24px' }}>HelpLine Finance partners with DSAs (Direct Selling Agents) and Organisers across Tamil Nadu, Pondicherry, Karnataka, and Kerala. Earn commissions by referring clients who need financial solutions.</p>
+            <div className="label-tag">{t.partner.label}</div>
+            <h2 className="section-title">{t.partner.secTitle}</h2>
+            <p style={{ fontSize: '15px', color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '24px' }}>{t.partner.desc}</p>
             <div className="partner-benefits">
-              {[['💰', 'Attractive Commissions', 'Earn competitive referral commissions on every successful loan disbursement through your referrals.'], ['🤝', 'Strong Support', 'Full support from our team — from client application to final loan disbursement.'], ['🌐', 'Wide Product Range', 'Offer clients 8+ loan products covering all their financial needs — lending, recovery, and legal.'], ['⚡', 'Fast Processing', '48-hour loan processing keeps your clients happy and strengthens your referral business.']].map(([ico, h, d]) => (
-                <div key={h} className="pb-item">
-                  <div className="pb-icon">{ico}</div>
-                  <div><h4>{h}</h4><p>{d}</p></div>
+              {t.partner.benefits.map((b, i) => (
+                <div key={i} className="pb-item">
+                  <div className="pb-icon">{b.icon}</div>
+                  <div><h4>{b.title}</h4><p>{b.desc}</p></div>
                 </div>
               ))}
             </div>
           </div>
           <div data-sr data-sr-d="2">
             <div className="partner-form-wrap">
-              <h3>Organiser Registration</h3>
+              <h3>{t.partner.formTitle}</h3>
               <form onSubmit={handleSubmit}>
-                {[['Full Name', 'text', 'Your full name', true], ['Company Name', 'text', 'Your company / organisation', false], ['Email Address', 'email', 'your@email.com', true], ['Contact Number', 'tel', '10-digit mobile', true], ['Location', 'text', 'City, State', true]].map(([l, t, ph, req]) => (
+                {[
+                  [t.partner.form.name, 'text', t.partner.form.namePH, true],
+                  [t.partner.form.company, 'text', t.partner.form.compPH, false],
+                  [t.partner.form.email, 'email', t.partner.form.emailPH, true],
+                  [t.partner.form.phone, 'tel', t.partner.form.phonePH, true],
+                  [t.partner.form.loc, 'text', t.partner.form.locPH, true]
+                ].map(([l, t_field, ph, req]) => (
                   <div key={l} className="form-group">
                     <label className="form-label">{l}{req ? ' *' : ''}</label>
-                    <input className="form-ctrl" type={t} placeholder={ph} required={req} pattern={t === 'tel' ? '[6-9][0-9]{9}' : undefined} />
+                    <input className="form-ctrl" type={t_field} placeholder={ph} required={req} pattern={t_field === 'tel' ? '[6-9][0-9]{9}' : undefined} />
                   </div>
                 ))}
-                <button type="submit" className="btn btn-primary btn-block" style={{ padding: '14px', marginTop: '8px' }}>Register as Organiser →</button>
+                <button type="submit" className="btn btn-primary btn-block" style={{ padding: '14px', marginTop: '8px' }}>{t.partner.submit}</button>
               </form>
-              {toast && <div className="toast-inline" style={{ marginTop: '16px', padding: '12px', background: 'var(--sky-50)', borderRadius: '8px', color: 'var(--sky-800)', fontWeight: 600, fontSize: '13px' }}>✓ Registration received! We'll contact you shortly.</div>}
+              {toast && <div className="toast-inline" style={{ marginTop: '16px', padding: '12px', background: 'var(--sky-50)', borderRadius: '8px', color: 'var(--sky-800)', fontWeight: 600, fontSize: '13px' }}>{t.partner.success}</div>}
             </div>
           </div>
         </div>
-      </div></section>
-      <div id="toast" className={toast ? 'show' : ''}>✓ Registration submitted! We'll be in touch soon.</div>
+      </section>
+      <div id="toast" className={toast ? 'show' : ''}>{t.partner.success}</div>
     </div>
   );
 }
@@ -215,10 +221,10 @@ export function ContactPage({ onNav }) {
   ];
   return (
     <div>
-      <PageHero title="Get in Touch" subtitle="Our team responds within 2 business hours. Call or WhatsApp for immediate assistance." breadcrumbs={[{ label: 'Contact' }]} onNav={onNav} />
+      <PageHero title={t.contact.title} subtitle={t.contact.desc} breadcrumbs={[{ label: t.contact.label || 'Contact' }]} onNav={onNav} />
       <div className="contact-page-layout">
         <div>
-          <h3>Send Us a Message</h3>
+          <h3>{t.contact.title}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group"><label className="form-label">Name *</label><input className="form-ctrl" type="text" placeholder={t.contact.namePH} required /></div>
@@ -229,19 +235,17 @@ export function ContactPage({ onNav }) {
               <label className="form-label">{t.contact.loanType} *</label>
               <select className="form-ctrl" required>
                 <option value="">{t.contact.selectLoan}</option>
-                <option>Private Finance</option><option>Project Loan</option><option>NRI Loans</option>
-                <option>Investment Loan</option><option>Low CIBIL Loan</option><option>Cheque Basis Loan</option>
-                <option>Private Recovery</option><option>DRT Legal Services</option><option>Other / General Enquiry</option>
+                {t.loanItems && t.loanItems.map((item, i) => <option key={i} value={item}>{item}</option>)}
               </select>
             </div>
             <div className="form-row">
               <div className="form-group">
                 <label className="form-label">{t.contact.amountRange}</label>
-                <select className="form-ctrl"><option value="">Select range…</option><option>Below ₹10L</option><option>₹10L – ₹50L</option><option>₹50L – ₹1Cr</option><option>₹1Cr – ₹5Cr</option><option>Above ₹5Cr</option></select>
+                <select className="form-ctrl"><option value="">{t.contact.selectAmount}</option><option>Below ₹10L</option><option>₹10L – ₹50L</option><option>₹50L – ₹1Cr</option><option>₹1Cr – ₹5Cr</option><option>Above ₹5Cr</option></select>
               </div>
               <div className="form-group">
                 <label className="form-label">{t.contact.state}</label>
-                <select className="form-ctrl"><option value="">Select state…</option><option>Tamil Nadu</option><option>Pondicherry</option><option>Karnataka</option><option>Kerala</option></select>
+                <select className="form-ctrl"><option value="">{t.contact.selectState}</option><option>Tamil Nadu</option><option>Pondicherry</option><option>Karnataka</option><option>Kerala</option></select>
               </div>
             </div>
             <div className="form-group"><label className="form-label">Message</label><textarea className="form-ctrl" placeholder="Any specific details about your requirement…" /></div>
@@ -251,15 +255,15 @@ export function ContactPage({ onNav }) {
         </div>
         <div>
           <div className="info-card">
-            <div className="info-card-head">Our Office</div>
-            <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">AKR Corniche Center No.30/11<br/>Second Line Beach, George Town<br/>Chennai – 600 001</div></div></div>
+            <div className="info-card-head">{t.contact.office}</div>
+            <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">{t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}{i < 2 ? <br/> : ''}</span>)}</div></div></div>
             <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">Phone</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
             <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">Email</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
-            <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">Hours</div><div className="info-val">Mon–Sat: 9:00 AM – 6:00 PM<br/>Response within 2 business hours</div></div></div>
+            <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">Hours</div><div className="info-val">{t.contact.hours}</div></div></div>
             <a href="https://maps.google.com/?q=AKR+Corniche+Center+Second+Line+Beach+George+Town+Chennai" target="_blank" rel="noopener noreferrer" className="map-box" style={{ display: 'flex' }}>
               <span>📍 View on Google Maps →</span>
             </a>
-            <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: '14px' }}>💬 WhatsApp Us Now</a>
+            <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: '14px' }}>{t.contact.waBtn}</a>
           </div>
         </div>
       </div>
@@ -295,7 +299,7 @@ export function PrivacyPage({ onNav }) {
           ['Contact for Privacy Matters', 'For any privacy-related concerns, data access requests, or deletion requests, please contact: helplineprivatefinance@gmail.com | +91 809 809 6666']
         ].map(([h, b]) => (
           <div key={h} style={{ marginBottom: '32px' }}>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '20px', color: 'var(--sky-900)', marginBottom: '10px', fontWeight: 700 }}>{h}</h2>
+            <h2 style={{ fontFamily: '"Inter", sans-serif', fontSize: '20px', color: 'var(--sky-900)', marginBottom: '10px', fontWeight: 700 }}>{h}</h2>
             <p style={{ fontSize: '14.5px', color: 'var(--text-muted)', lineHeight: 1.8 }}>{b}</p>
           </div>
         ))}
@@ -318,7 +322,7 @@ export function TermsPage({ onNav }) {
           ['Contact', 'For queries regarding these terms: helplineprivatefinance@gmail.com | +91 809 809 6666 | AKR Corniche Center No.30/11, Second Line Beach, George Town, Chennai – 600 001.']
         ].map(([h, b]) => (
           <div key={h} style={{ marginBottom: '32px' }}>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '20px', color: 'var(--sky-900)', marginBottom: '10px', fontWeight: 700 }}>{h}</h2>
+            <h2 style={{ fontFamily: '"Inter", sans-serif', fontSize: '20px', color: 'var(--sky-900)', marginBottom: '10px', fontWeight: 700 }}>{h}</h2>
             <p style={{ fontSize: '14.5px', color: 'var(--text-muted)', lineHeight: 1.8 }}>{b}</p>
           </div>
         ))}

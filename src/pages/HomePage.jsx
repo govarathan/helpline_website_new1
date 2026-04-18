@@ -179,8 +179,6 @@ useEffect(() => {
     <div>
       {/* HERO */}
       <section className="hero" ref={heroRef}>
-        <div className="hero-mesh" />
-        <div className="hero-grid-bg" />
         <div className="hero-inner">
           <div className="hero-left" data-sr>
             <div className="hero-eyebrow">
@@ -227,14 +225,7 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* TRUST STRIP */}
-      <div className="trust-strip">
-        <div className="trust-inner">
-          {[['🏛', 'RBI Compliant'], ['🔒', 'SSL Secured'], ['⭐', '20,000+ Families Helped'], ['📍', 'Chennai, Tamil Nadu'], ['⚡', '48hr Processing']].map(([ico, txt]) => (
-            <div key={txt} className="ti"><div className="ico">{ico}</div>{txt}</div>
-          ))}
-        </div>
-      </div>
+
 
       {/* ABOUT SNAPSHOT */}
       <section className="section about-snap">
@@ -258,19 +249,17 @@ useEffect(() => {
               <button className="btn btn-primary btn-lg" onClick={() => onNav('about')}>{t.about.btn}</button>
             </div>
           </div>
-          <div data-sr data-sr-d="2">
-            <div className="about-panel">
-              <div className="panel-head">{t.about.panelTitle}</div>
-              {t.loanItems.map((item, i) => (
-                <div key={i} className="loan-list-item" onClick={() => onNav(['pf','pl','nri','inv','cibil','cheq','rec','drt'][i])}>
-                  <span className="loan-arrow">→</span>{item}
-                </div>
-              ))}
-              <div style={{ marginTop: '26px', position: 'relative', zIndex: 1 }}>
-                <button className="btn btn-gold btn-block" onClick={() => onNav('contact')}>{t.about.panelCta}</button>
+            <div data-sr data-sr-d="2">
+              <div className="about-panel">
+                <div className="panel-head">{t.about.panelTitle}</div>
+                {t.services?.items?.map((item, i) => (
+                  <div key={i} className="loan-list-item" onClick={() => onNav(item.page)}>
+                    <span className="loan-arrow">▸</span>{item.title}
+                  </div>
+                ))}
+                <button className="btn btn-outline" style={{ marginTop: '20px', width: '100%' }} onClick={() => onNav('contact')}>{t.about.panelCta}</button>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
@@ -332,16 +321,16 @@ useEffect(() => {
           <div className="testi-grid">
             {t.testimonials.items.map((item, i) => (
               <div key={i} className="testi-card" data-sr data-sr-d={String(i + 1)}>
-                <div className="testi-quote">"</div>
-                <div className="testi-stars">★★★★★</div>
-                <p className="testi-text">"{item.text}"</p>
-                <div className="testi-author">
+                <div className="testi-author" style={{ marginBottom: '16px' }}>
                   <div className="testi-avatar">{item.initial}</div>
                   <div>
                     <div className="testi-name">{item.name}</div>
                     <div className="testi-badge">{t.testimonials.badge}</div>
                   </div>
                 </div>
+                <div className="testi-quote" style={{ marginBottom: '8px' }}>"</div>
+                <div className="testi-stars">★★★★★</div>
+                <p className="testi-text">"{item.text}"</p>
               </div>
             ))}
           </div>

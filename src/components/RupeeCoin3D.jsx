@@ -7,19 +7,19 @@ export default function RupeeCoin3D() {
 
   useEffect(() => {
     let mounted = true;
-    
+
     const init = () => {
       if (!mounted) return;
-      
+
       // Wait for THREE to be available
       if (!window.THREE || !mountRef.current) {
         setTimeout(init, 100);
         return;
       }
-      
+
       const THREE = window.THREE;
       const container = mountRef.current;
-      
+
       // Clear any existing content
       while (container.firstChild) {
         container.removeChild(container.firstChild);
@@ -42,7 +42,7 @@ export default function RupeeCoin3D() {
       const fc = document.createElement('canvas');
       fc.width = 512; fc.height = 512;
       const fctx = fc.getContext('2d');
-      
+
       // Gold radial gradient
       const grad = fctx.createRadialGradient(256, 256, 20, 256, 256, 256);
       grad.addColorStop(0, '#F5D060');
@@ -53,75 +53,44 @@ export default function RupeeCoin3D() {
       fctx.beginPath();
       fctx.arc(256, 256, 256, 0, Math.PI * 2);
       fctx.fill();
-      
+
       // Outer ring
       fctx.beginPath();
       fctx.arc(256, 256, 235, 0, Math.PI * 2);
-      fctx.strokeStyle = 'rgba(255,215,0,0.6)';
+      fctx.strokeStyle = 'rgba(250, 213, 3, 1)';
       fctx.lineWidth = 8;
       fctx.stroke();
-      
+
       // Inner ring
       fctx.beginPath();
       fctx.arc(256, 256, 215, 0, Math.PI * 2);
       fctx.strokeStyle = 'rgba(139,105,20,0.4)';
       fctx.lineWidth = 3;
       fctx.stroke();
-      
-      // Arc text - HELPLINE FINANCE
-      fctx.save();
-      fctx.translate(256, 256);
-      fctx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
-      fctx.fillStyle = '#1B3A6B';
-      fctx.textAlign = 'center';
-      const topText = 'HELPLINE FINANCE';
-      const topR = 185;
-      const topStart = -Math.PI * 0.65;
-      const topSpan = Math.PI * 1.3;
-      for (let i = 0; i < topText.length; i++) {
-        const angle = topStart + (topSpan / (topText.length - 1)) * i;
-        fctx.save();
-        fctx.rotate(angle + Math.PI / 2);
-        fctx.fillText(topText[i], 0, -topR);
-        fctx.restore();
-      }
-      
-      // Bottom text
-      const btmText = '★ SINCE 2017 ★';
-      const btmR = 178;
-      const btmStart = Math.PI * 0.74;
-      const btmSpan = Math.PI * 0.56;
-      for (let i = 0; i < btmText.length; i++) {
-        const angle = btmStart + (btmSpan / (btmText.length - 1)) * i;
-        fctx.save();
-        fctx.rotate(angle - Math.PI / 2);
-        fctx.fillText(btmText[i], 0, btmR);
-        fctx.restore();
-      }
+
+      // Arc text removed as requested
       fctx.restore();
-      
-      // ₹ symbol
-    fctx.save(); // Save current state
 
-fctx.translate(256, 262);
-fctx.rotate(30); 
+      fctx.save();
+      fctx.translate(256, 256); // Center of the canvas
+      fctx.rotate(-Math.PI / 2); // 90 degrees counter-clockwise to make it upright
+      fctx.translate(0, 12); // Minor font baseline correction after rotation
 
-fctx.font = 'bold 200px "Playfair Display", serif';
-fctx.fillStyle = '#0C2340';
-fctx.textAlign = 'center';
-fctx.textBaseline = 'middle';
+      fctx.font = 'bold 300px "Inter", Arial, sans-serif';
+      fctx.fillStyle = '#fac801ff';
+      fctx.textAlign = 'center';
+      fctx.textBaseline = 'middle';
 
-fctx.fillText('₹', 0, 0); 
+      fctx.fillText('₹', 0, 0);
+      fctx.restore();
 
-fctx.restore(); 
-      
       // Glow behind symbol
-      const glow = fctx.createRadialGradient(256, 256, 10, 256, 256, 90);
-      glow.addColorStop(0, 'rgba(240,200,74,0.25)');
+      const glow = fctx.createRadialGradient(256, 256, 10, 256, 256, 110);
+      glow.addColorStop(0, 'rgba(240,200,74,0.3)');
       glow.addColorStop(1, 'rgba(240,200,74,0)');
       fctx.fillStyle = glow;
       fctx.beginPath();
-      fctx.arc(256, 256, 90, 0, Math.PI * 2);
+      fctx.arc(256, 256, 110, 0, Math.PI * 2);
       fctx.fill();
 
       // Edge texture
@@ -136,7 +105,7 @@ fctx.restore();
       egrad.addColorStop(1, '#8B6914');
       ectx.fillStyle = egrad;
       ectx.fillRect(0, 0, 512, 64);
-      
+
       // Edge grooves
       for (let i = 0; i < 36; i++) {
         const x = (i / 36) * 512;
@@ -159,15 +128,15 @@ fctx.restore();
       scene.add(coin);
 
       // Lights
-      const ambLight = new THREE.AmbientLight(0xffffff, 0.55);
+      const ambLight = new THREE.AmbientLight(0xffffff, 1.4);
       scene.add(ambLight);
-      const keyLight = new THREE.PointLight(0xFFD700, 3.5, 20);
+      const keyLight = new THREE.PointLight(0xFFFFFF, 3.5, 20);
       keyLight.position.set(3, 4, 5);
       scene.add(keyLight);
-      const fillLight = new THREE.PointLight(0xffffff, 1.4, 18);
+      const fillLight = new THREE.PointLight(0xFFD700, 2.0, 18);
       fillLight.position.set(-3, 1, 4);
       scene.add(fillLight);
-      const rimLight = new THREE.PointLight(0xCD7F32, 1.8, 14);
+      const rimLight = new THREE.PointLight(0xFFD700, 2.0, 14);
       rimLight.position.set(0, -3, -3);
       scene.add(rimLight);
       const topLight = new THREE.PointLight(0x87CEEB, 1.0, 15);
@@ -203,7 +172,7 @@ fctx.restore();
       }
       animate();
     };
-    
+
     init();
 
     return () => {
