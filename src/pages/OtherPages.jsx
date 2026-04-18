@@ -164,7 +164,8 @@ export function PartnerPage({ onNav }) {
   return (
     <div>
       <PageHero title={t.partner.title} subtitle={t.partner.subtitle} breadcrumbs={[{ label: t.nav?.partner || 'Partner With Us' }]} onNav={onNav} />
-      <section className="section"><div className="wrap">
+      <section className="section">
+        <div className="wrap">
         <div className="partner-grid">
           <div data-sr>
             <div className="label-tag">{t.partner.label}</div>
@@ -200,6 +201,7 @@ export function PartnerPage({ onNav }) {
               {toast && <div className="toast-inline" style={{ marginTop: '16px', padding: '12px', background: 'var(--sky-50)', borderRadius: '8px', color: 'var(--sky-800)', fontWeight: 600, fontSize: '13px' }}>{t.partner.success}</div>}
             </div>
           </div>
+        </div>
         </div>
       </section>
       <div id="toast" className={toast ? 'show' : ''}>{t.partner.success}</div>
