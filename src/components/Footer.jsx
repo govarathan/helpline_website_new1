@@ -1,4 +1,5 @@
 import { useLang } from '../context/LangContext.jsx';
+import logo from '../assets/logo.png';
 
 export default function Footer({ onNav }) {
   const { t } = useLang();
@@ -10,7 +11,7 @@ export default function Footer({ onNav }) {
         <div className="footer-brand">
           <div className="footer-brand-logo">
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <img src="/src/assets/logo.png" alt="HelpLine Finance Logo" style={{ width: '42px', height: '42px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
+              <img src={logo} alt="HelpLine Finance Logo" fetchPriority="high" loading="eager" decoding="async" style={{ width: '42px', height: '42px', objectFit: 'contain', background: 'transparent' }} />
               <div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontSize: '15px', fontWeight: 700, color: 'white' }}>HelpLine</div>
                 <div style={{ fontSize: '10px', color: 'rgba(255,255,255,.4)', fontWeight: 600 }}>Finance</div>
@@ -57,7 +58,10 @@ export default function Footer({ onNav }) {
       </div>
 
       <div className="footer-bottom">
-        <span className="footer-copy">{t.footer.copy}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <span className="footer-copy">{t.footer.copy}</span>
+          <span style={{ fontSize: '10px', color: 'rgba(255,255,255,.25)', letterSpacing: '0.5px' }}>BUILD VERSION: v1.0.4</span>
+        </div>
         <div className="footer-legal">
           <a href="#" onClick={(e) => { e.preventDefault(); go('privacy'); }}>{t.footer.privacy}</a>
           <a href="#" onClick={(e) => { e.preventDefault(); go('terms'); }}>{t.footer.terms}</a>

@@ -145,7 +145,7 @@ function ContactForm({ t, onNav }) {
 }
 
 export default function HomePage({ onNav }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [coin3DReady, setCoin3DReady] = useState(false);
   const heroRef = useRef(null);
 
@@ -221,7 +221,7 @@ useEffect(() => {
 
         <div className="hero-scroll" aria-hidden="true">
           <div className="scroll-track"><div className="scroll-thumb" /></div>
-          <span>scroll</span>
+          <span>{lang === 'ta' ? 'ஸ்க்ரோல்' : lang === 'hi' ? 'स्क्रॉल' : 'scroll'}</span>
         </div>
       </section>
 
@@ -257,7 +257,7 @@ useEffect(() => {
                     <span className="loan-arrow">▸</span>{item.title}
                   </div>
                 ))}
-                <button className="btn btn-outline" style={{ marginTop: '20px', width: '100%' }} onClick={() => onNav('contact')}>{t.about.panelCta}</button>
+                <button className="btn btn-gold" style={{ marginTop: '20px', width: '100%' }} onClick={() => onNav('contact')}>{t.about.panelCta}</button>
               </div>
             </div>
         </div>
@@ -281,18 +281,33 @@ useEffect(() => {
             <h2 className="section-title" style={{ textAlign: 'center' }}>{t.services.title}</h2>
             <p className="section-desc" style={{ margin: '0 auto' }}>{t.services.desc}</p>
           </div>
-          <div className="services-grid">
+          <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', alignItems: 'stretch' }}>
             {t.services.items.map((svc, i) => (
-              <div key={i} className="svc-card" onClick={() => onNav(svc.page)} data-sr data-sr-d={String((i % 3) + 1)}>
-                <div className="svc-icon">{svc.icon}</div>
-                <h3>{svc.title}</h3>
-                <p>{svc.desc}</p>
-                <div className="svc-tags">
+              <div 
+                key={i} 
+                className="svc-card" 
+                onClick={() => onNav(svc.page)} 
+                data-sr 
+                data-sr-d={String((i % 3) + 1)}
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  height: '100%',
+                  backgroundColor: '#F5F3FF',
+                  padding: '24px',
+                  borderRadius: '12px',
+                  border: '1px solid #DDD6FE',
+                  cursor: 'pointer'
+                }}
+              >
+                <div className="svc-icon" style={{ fontSize: '24px', marginBottom: '16px' }}>{svc.icon}</div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px' }}>{svc.title}</h3>
+                <p style={{ fontSize: '14px', color: '#666', lineHeight: 1.6, flex: 1 }}>{svc.desc}</p>
+                <div className="svc-tags" style={{ marginTop: '16px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {svc.tags.map((tag, j) => (
-                    <span key={j} className={`tag ${j === 0 ? 'tag-blue' : 'tag-gold'}`}>{tag}</span>
+                    <span key={j} className={`tag ${j === 0 ? 'tag-blue' : 'tag-gold'}`} style={{ fontSize: '12px', padding: '2px 8px', borderRadius: '4px', background: j === 0 ? '#e3f2fd' : '#fff3e0', color: j === 0 ? '#1976d2' : '#e65100', border: '1px solid currentColor' }}>{tag}</span>
                   ))}
                 </div>
-                <div className="svc-cta">→</div>
               </div>
             ))}
           </div>
@@ -364,10 +379,10 @@ useEffect(() => {
             <div data-sr data-sr-d="2">
               <div className="info-card">
                 <div className="info-card-head">{t.contact.office}</div>
-                <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">{t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}{i < 2 ? <br/> : ''}</span>)}</div></div></div>
-                <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">Phone</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
-                <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">Email</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
-                <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">Hours</div><div className="info-val">{t.contact.hours.split('\n').map((l, i) => <span key={i}>{l}{i === 0 ? <br/> : ''}</span>)}</div></div></div>
+                <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">{lang === 'ta' ? 'முகவரி' : lang === 'hi' ? 'पता' : 'Address'}</div><div className="info-val">{t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}{i < 2 ? <br/> : ''}</span>)}</div></div></div>
+                <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">{lang === 'ta' ? 'தொலைபேசி' : lang === 'hi' ? 'फ़ोन' : 'Phone'}</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
+                <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">{lang === 'ta' ? 'மின்னஞ்சல்' : lang === 'hi' ? 'ईमेल' : 'Email'}</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
+                <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">{lang === 'ta' ? 'நேரம்' : lang === 'hi' ? 'समय' : 'Hours'}</div><div className="info-val">{t.contact.hours.split('\n').map((l, i) => <span key={i}>{l}{i === 0 ? <br/> : ''}</span>)}</div></div></div>
                 <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: '8px' }}>{t.contact.waBtn}</a>
               </div>
             </div>
