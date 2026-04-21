@@ -3,7 +3,7 @@ import { useLang } from '../context/LangContext.jsx';
 import logo from '../assets/logo.png';
 
 export default function Navbar({ currentPage, onNav }) {
-  const { t, lang, setLang, translations } = useLang(); // Fixed: useLang returns an object
+  const { t, lang, setLang, translations } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [ddOpen, setDdOpen] = useState(false);
@@ -58,16 +58,16 @@ export default function Navbar({ currentPage, onNav }) {
           </div>
 
           <div className="nav-links">
-            <span className={`nav-link${currentPage === 'home' ? ' active-link' : ''}`} onClick={() => navTo('home')}>{t.nav?.home || 'Home'}</span>
+            <span className={`nav-link${currentPage === 'home' ? ' active-link' : ''}`} onClick={() => navTo('home')}>{t.nav?.home}</span>
 
             <div className="nav-dd" ref={ddRef}>
               <span className="nav-link" onClick={() => setDdOpen(!ddOpen)} style={{ display: 'inline-flex', alignItems: 'center' }}>
-                {t.nav?.services || 'Services'} <span style={{ fontSize: '10px', marginLeft: '3px', lineHeight: 1, position: 'relative', top: '-1px' }}>▾</span>
+                {t.nav?.services} <span style={{ fontSize: '10px', marginLeft: '3px', lineHeight: 1, position: 'relative', top: '-1px' }}>▾</span>
               </span>
               {ddOpen && (
                 <div className="dd-menu">
                   <div>
-                    <div className="dd-col-head">Lending</div>
+                    <div className="dd-col-head">{t.nav_cat.lending}</div>
                     {services.slice(0, 6).map(s => (
                       <div key={s.key} className="dd-link" onClick={() => navTo(s.key)}>
                         <span className="dot" /> {s.label}
@@ -75,27 +75,27 @@ export default function Navbar({ currentPage, onNav }) {
                     ))}
                   </div>
                   <div>
-                    <div className="dd-col-head">Recovery & Legal</div>
+                    <div className="dd-col-head">{t.nav_cat.recovery}</div>
                     {services.slice(6).map(s => (
                       <div key={s.key} className="dd-link" onClick={() => navTo(s.key)}>
                         <span className="dot" /> {s.label}
                       </div>
                     ))}
-                    <div className="dd-col-head" style={{ marginTop: '14px' }}>Resources</div>
-                    <div className="dd-link" onClick={() => navTo('docs')}><span className="dot" />{t.nav?.documents || 'Documents'}</div>
-                    <div className="dd-link" onClick={() => navTo('partner')}><span className="dot" />{t.nav?.partner || 'Partner With Us'}</div>
+                    <div className="dd-col-head" style={{ marginTop: '14px' }}>{t.nav_cat.resources}</div>
+                    <div className="dd-link" onClick={() => navTo('docs')}><span className="dot" />{t.nav?.documents}</div>
+                    <div className="dd-link" onClick={() => navTo('partner')}><span className="dot" />{t.nav?.partner}</div>
                   </div>
                 </div>
               )}
             </div>
 
-            <span className={`nav-link${currentPage === 'about' ? ' active-link' : ''}`} onClick={() => navTo('about')}>{t.nav?.about || 'About Us'}</span>
-            <span className={`nav-link${currentPage === 'docs' ? ' active-link' : ''}`} onClick={() => navTo('docs')}>{t.nav?.documents || 'Documents'}</span>
-            <span className={`nav-link${currentPage === 'contact' ? ' active-link' : ''}`} onClick={() => navTo('contact')}>{t.nav?.contact || 'Contact'}</span>
+            <span className={`nav-link${currentPage === 'about' ? ' active-link' : ''}`} onClick={() => navTo('about')}>{t.nav?.about}</span>
+            <span className={`nav-link${currentPage === 'docs' ? ' active-link' : ''}`} onClick={() => navTo('docs')}>{t.nav?.documents}</span>
+            <span className={`nav-link${currentPage === 'contact' ? ' active-link' : ''}`} onClick={() => navTo('contact')}>{t.nav?.contact}</span>
 
             <div className="lang-dd" ref={langRef}>
               <button className="lang-btn" onClick={() => setLangOpen(!langOpen)}>
-                {translations?.[lang]?.flag || '🇬🇧'} <span className="lang-name">{translations?.[lang]?.name || 'English'}</span>
+                {translations?.[lang]?.flag} <span className="lang-name">{translations?.[lang]?.name}</span>
                 <span style={{ fontSize: '10px', marginLeft: '4px' }}>▾</span>
               </button>
               {langOpen && (
@@ -115,8 +115,8 @@ export default function Navbar({ currentPage, onNav }) {
           </div>
 
           <div className="nav-actions">
-            <button className="btn btn-gold" onClick={() => navTo('partner')} style={{ marginRight: '8px', minWidth: '145px', height: '36px', padding: '0 16px' }}>🤝 {t.nav?.partner || 'Partner With Us'}</button>
-            <button className="btn btn-primary" onClick={() => navTo('contact')} style={{ marginLeft: '12px', minWidth: '145px', height: '36px', padding: '0 16px' }}>{t.nav?.apply || 'Apply Now'}</button>
+            <button className="btn btn-gold" onClick={() => navTo('partner')} style={{ marginRight: '8px', minWidth: '145px', height: '36px', padding: '0 16px' }}>🤝 {t.nav?.partner}</button>
+            <button className="btn btn-primary" onClick={() => navTo('contact')} style={{ marginLeft: '12px', minWidth: '145px', height: '36px', padding: '0 16px' }}>{t.nav?.apply}</button>
           </div>
 
           <button className="hamburger" onClick={() => setMobileOpen(true)}>
@@ -136,16 +136,16 @@ export default function Navbar({ currentPage, onNav }) {
           </div>
         </div>
         {[
-          { key: 'home', label: t.nav?.home || 'Home' },
-          { key: 'about', label: t.nav?.about || 'About Us' },
-          { key: 'docs', label: t.nav?.documents || 'Documents' },
-          { key: 'partner', label: t.nav?.partner || 'Partner With Us' },
-          { key: 'contact', label: t.nav?.contact || 'Contact' }
+          { key: 'home', label: t.nav?.home },
+          { key: 'about', label: t.nav?.about },
+          { key: 'docs', label: t.nav?.documents },
+          { key: 'partner', label: t.nav?.partner },
+          { key: 'contact', label: t.nav?.contact }
         ].map(item => (
           <div key={item.key} className="mob-link" onClick={() => navTo(item.key)}>{item.label}</div>
         ))}
         <div style={{ borderTop: '1px solid rgba(255,255,255,.07)', paddingTop: '16px', marginTop: '8px' }}>
-          <div className="mob-link" style={{ color: 'rgba(255,255,255,.5)', fontSize: '12px', textTransform: 'uppercase', cursor: 'default' }}>{t.nav?.services || 'Services'}</div>
+          <div className="mob-link" style={{ color: 'rgba(255,255,255,.5)', fontSize: '12px', textTransform: 'uppercase', cursor: 'default' }}>{t.nav?.services}</div>
           <div className="mob-sub">
             {services.map(s => (
               <div key={s.key} className="mob-link" onClick={() => navTo(s.key)}>{s.label}</div>
@@ -153,8 +153,8 @@ export default function Navbar({ currentPage, onNav }) {
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '22px' }}>
-          <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block">💬 {t.nav?.whatsapp || 'WhatsApp'}</a>
-          <button className="btn btn-gold btn-block" onClick={() => navTo('contact')}>{t.nav?.apply || 'Apply Now'}</button>
+          <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block">💬 {t.nav?.whatsapp}</a>
+          <button className="btn btn-gold btn-block" onClick={() => navTo('contact')}>{t.nav?.apply}</button>
         </div>
         <div style={{ marginTop: '22px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
           {Object.entries(translations || {}).map(([code, val]) => (

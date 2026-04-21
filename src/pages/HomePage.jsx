@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLang } from '../context/LangContext.jsx';
 import RupeeCoin3D from '../components/RupeeCoin3D.jsx';
+
 function useCountUp(target, duration = 1800, start = false) {
   const [value, setValue] = useState(0);
   useEffect(() => {
@@ -17,7 +18,7 @@ function useCountUp(target, duration = 1800, start = false) {
   return value;
 }
 
-function StatBox({ value, label, suffix = '' }) {
+function StatBox({ value, label }) {
   const ref = useRef(null);
   const [started, setStarted] = useState(false);
   const num = useCountUp(parseInt(value.replace(/\D/g, '')) || 0, 1800, started);
@@ -68,7 +69,7 @@ function EmiCalculator({ t }) {
           <input type="range" min="1" max="24" step="0.1" value={rate} onChange={e => setRate(+e.target.value)} />
         </div>
         <div className="slider-block">
-          <div className="slider-label">{t.emi.tenure} <span className="slider-val">{tenure} Years</span></div>
+          <div className="slider-label">{t.emi.tenure} <span className="slider-val">{tenure} {t.common.years}</span></div>
           <input type="range" min="1" max="30" step="1" value={tenure} onChange={e => setTenure(+e.target.value)} />
         </div>
         <div className="emi-disclaimer">* {t.emi.disclaimer}</div>
@@ -88,7 +89,7 @@ function EmiCalculator({ t }) {
   );
 }
 
-function ContactForm({ t, onNav }) {
+function ContactForm({ t }) {
   const [toast, setToast] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,11 +103,11 @@ function ContactForm({ t, onNav }) {
       <form onSubmit={handleSubmit} id="home-contact-form">
         <div className="form-row">
           <div className="form-group">
-            <label className="form-label">Full Name *</label>
+            <label className="form-label">{t.contact.name} *</label>
             <input className="form-ctrl" type="text" placeholder={t.contact.namePH} required />
           </div>
           <div className="form-group">
-            <label className="form-label">Phone Number *</label>
+            <label className="form-label">{t.contact.phone} *</label>
             <input className="form-ctrl" type="tel" placeholder={t.contact.phonePH} pattern="[6-9][0-9]{9}" required />
           </div>
         </div>
@@ -114,9 +115,10 @@ function ContactForm({ t, onNav }) {
           <label className="form-label">{t.contact.loanType} *</label>
           <select className="form-ctrl" required>
             <option value="">{t.contact.selectLoan}</option>
-            <option>Private Finance</option><option>Project Loan</option><option>NRI Loans</option>
-            <option>Investment Loan</option><option>Low CIBIL Loan</option><option>Cheque Basis Loan</option>
-            <option>Private Recovery</option><option>DRT Legal Services</option><option>Other</option>
+            {t.services.items.map((svc, i) => (
+              <option key={i} value={svc.title}>{svc.title}</option>
+            ))}
+            <option value="Other">{t.common.other}</option>
           </select>
         </div>
         <div className="form-row">
@@ -124,15 +126,18 @@ function ContactForm({ t, onNav }) {
             <label className="form-label">{t.contact.amountRange}</label>
             <select className="form-ctrl">
               <option value="">{t.contact.selectAmount}</option>
-              <option>Below ₹10L</option><option>₹10L – ₹50L</option>
-              <option>₹50L – ₹1Cr</option><option>₹1Cr – ₹5Cr</option><option>Above ₹5Cr</option>
+              <option>{t.contact.below10L}</option>
+              <option>₹10L – ₹50L</option>
+              <option>₹50L – ₹1Cr</option>
+              <option>₹1Cr – ₹5Cr</option>
+              <option>{t.contact.above5Cr}</option>
             </select>
           </div>
           <div className="form-group">
             <label className="form-label">{t.contact.state}</label>
             <select className="form-ctrl">
               <option value="">{t.contact.selectState}</option>
-              <option>Tamil Nadu</option><option>Pondicherry</option><option>Karnataka</option><option>Kerala</option>
+              {t.common.states.map(s => <option key={s}>{s}</option>)}
             </select>
           </div>
         </div>
@@ -147,38 +152,22 @@ function ContactForm({ t, onNav }) {
 export default function HomePage({ onNav }) {
   const { t, lang } = useLang();
   const [coin3DReady, setCoin3DReady] = useState(false);
-  const heroRef = useRef(null);
 
-useEffect(() => {
-  if (window.THREE) {
-    setCoin3DReady(true);
-    return;
-  }
-  const s = document.getElementById('three-script');
-  if (s) {
-    s.addEventListener('load', () => setCoin3DReady(true));
-    return;
-  }
-  const script = document.createElement('script');
-  script.id = 'three-script';
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-  script.onload = () => setCoin3DReady(true);
-  document.head.appendChild(script);
-}, []);
-
-  // Scroll reveal
-   useEffect(() => {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('[data-sr]').forEach(el => obs.observe(el));
-  return () => obs.disconnect();
-}, []);
+  useEffect(() => {
+    if (window.THREE) {
+      setCoin3DReady(true);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    script.onload = () => setCoin3DReady(true);
+    document.head.appendChild(script);
+  }, []);
 
   return (
     <div>
       {/* HERO */}
-      <section className="hero" ref={heroRef}>
+      <section className="hero">
         <div className="hero-inner">
           <div className="hero-left" data-sr>
             <div className="hero-eyebrow">
@@ -201,31 +190,29 @@ useEffect(() => {
             </div>
           </div>
 
-     <div className="hero-right">
-  <div className="coin-wrap">
-    <div className="coin-rings">
-      <div className="c-ring cr1"></div>
-      <div className="c-ring cr2"></div>
-      <div className="c-ring cr3"></div>
-    </div>
-    {coin3DReady ? (
-      <RupeeCoin3D />
-    ) : (
-      <div style={{ width: 380, height: 380, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ fontSize: '60px', color: 'var(--gold)', animation: 'spin 1s linear infinite' }}>₹</div>
-      </div>
-    )}
-  </div>
-</div>
-</div>
+          <div className="hero-right">
+            <div className="coin-wrap">
+              <div className="coin-rings">
+                <div className="c-ring cr1"></div>
+                <div className="c-ring cr2"></div>
+                <div className="c-ring cr3"></div>
+              </div>
+              {coin3DReady ? (
+                <RupeeCoin3D />
+              ) : (
+                <div style={{ width: 380, height: 380, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ fontSize: '60px', color: 'var(--gold)', animation: 'spin 1s linear infinite' }}>₹</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
         <div className="hero-scroll" aria-hidden="true">
           <div className="scroll-track"><div className="scroll-thumb" /></div>
-          <span>{lang === 'ta' ? 'ஸ்க்ரோல்' : lang === 'hi' ? 'स्क्रॉल' : 'scroll'}</span>
+          <span>{t.common.scroll}</span>
         </div>
       </section>
-
-
 
       {/* ABOUT SNAPSHOT */}
       <section className="section about-snap">
@@ -249,17 +236,17 @@ useEffect(() => {
               <button className="btn btn-primary btn-lg" onClick={() => onNav('about')}>{t.about.btn}</button>
             </div>
           </div>
-            <div data-sr data-sr-d="2">
-              <div className="about-panel">
-                <div className="panel-head">{t.about.panelTitle}</div>
-                {t.services?.items?.map((item, i) => (
-                  <div key={i} className="loan-list-item" onClick={() => onNav(item.page)}>
-                    <span className="loan-arrow">▸</span>{item.title}
-                  </div>
-                ))}
-                <button className="btn btn-gold" style={{ marginTop: '20px', width: '100%' }} onClick={() => onNav('contact')}>{t.about.panelCta}</button>
-              </div>
+          <div data-sr data-sr-d="2">
+            <div className="about-panel">
+              <div className="panel-head">{t.about.panelTitle}</div>
+              {t.services?.items?.map((item, i) => (
+                <div key={i} className="loan-list-item" onClick={() => onNav(item.page)}>
+                  <span className="loan-arrow">▸</span>{item.title}
+                </div>
+              ))}
+              <button className="btn btn-gold" style={{ marginTop: '20px', width: '100%' }} onClick={() => onNav('contact')}>{t.about.panelCta}</button>
             </div>
+          </div>
         </div>
       </section>
 
@@ -374,15 +361,15 @@ useEffect(() => {
           </div>
           <div className="contact-grid">
             <div data-sr>
-              <ContactForm t={t} onNav={onNav} />
+              <ContactForm t={t} />
             </div>
             <div data-sr data-sr-d="2">
               <div className="info-card">
                 <div className="info-card-head">{t.contact.office}</div>
-                <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">{lang === 'ta' ? 'முகவரி' : lang === 'hi' ? 'पता' : 'Address'}</div><div className="info-val">{t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}{i < 2 ? <br/> : ''}</span>)}</div></div></div>
-                <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">{lang === 'ta' ? 'தொலைபேசி' : lang === 'hi' ? 'फ़ोन' : 'Phone'}</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
-                <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">{lang === 'ta' ? 'மின்னஞ்சல்' : lang === 'hi' ? 'ईमेल' : 'Email'}</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
-                <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">{lang === 'ta' ? 'நேரம்' : lang === 'hi' ? 'समय' : 'Hours'}</div><div className="info-val">{t.contact.hours.split('\n').map((l, i) => <span key={i}>{l}{i === 0 ? <br/> : ''}</span>)}</div></div></div>
+                <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">{t.contact.addrLbl}</div><div className="info-val">{t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}{i < 2 ? <br/> : ''}</span>)}</div></div></div>
+                <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">{t.contact.phoneLbl}</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
+                <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">{t.contact.emailLbl}</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
+                <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">{t.contact.hoursLbl}</div><div className="info-val">{t.contact.hours.split('\n').map((l, i) => <span key={i}>{l}{i === 0 ? <br/> : ''}</span>)}</div></div></div>
                 <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: '8px' }}>{t.contact.waBtn}</a>
               </div>
             </div>
