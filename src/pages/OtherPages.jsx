@@ -225,46 +225,50 @@ export function ContactPage({ onNav }) {
     <div>
       <PageHero title={t.contact.title} subtitle={t.contact.desc} breadcrumbs={[{ label: t.contact.label || 'Contact' }]} onNav={onNav} />
       <div className="contact-page-layout">
-        <div className="contact-form-card">
-          <h3>{t.contact.title}</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div className="form-group"><label className="form-label">{t.contact.name} *</label><input className="form-ctrl" type="text" placeholder={t.contact.namePH} required /></div>
-              <div className="form-group"><label className="form-label">{t.contact.phone} *</label><input className="form-ctrl" type="tel" placeholder={t.contact.phonePH} pattern="[6-9][0-9]{9}" required /></div>
-            </div>
-            <div className="form-group"><label className="form-label">{t.contact.email}</label><input className="form-ctrl" type="email" placeholder={t.contact.emailPH} /></div>
-            <div className="form-group">
-              <label className="form-label">{t.contact.loanType} *</label>
-              <select className="form-ctrl" required>
-                <option value="">{t.contact.selectLoan}</option>
-                {t.loanItems && t.loanItems.map((item, i) => <option key={i} value={item}>{item}</option>)}
-              </select>
-            </div>
-            <div className="form-row">
+        <div>
+          <div className="label-tag">{t.contact.label}</div>
+          <h2 className="section-title" style={{ marginBottom: '24px' }}>{t.contact.title}</h2>
+          <div className="contact-form-card">
+            <form onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group"><label className="form-label">{t.contact.name} *</label><input className="form-ctrl" type="text" placeholder={t.contact.namePH} required /></div>
+                <div className="form-group"><label className="form-label">{t.contact.phone} *</label><input className="form-ctrl" type="tel" placeholder={t.contact.phonePH} pattern="[6-9][0-9]{9}" required /></div>
+              </div>
+              <div className="form-group"><label className="form-label">{t.contact.email}</label><input className="form-ctrl" type="email" placeholder={t.contact.emailPH} /></div>
               <div className="form-group">
-                <label className="form-label">{t.contact.amountRange}</label>
-                <select className="form-ctrl">
-                  <option value="">{t.contact.selectAmount}</option>
-                  <option>{t.contact.below10L}</option>
-                  <option>₹10L – ₹50L</option>
-                  <option>₹50L – ₹1Cr</option>
-                  <option>₹1Cr – ₹5Cr</option>
-                  <option>{t.contact.above5Cr}</option>
+                <label className="form-label">{t.contact.loanType} *</label>
+                <select className="form-ctrl" required>
+                  <option value="">{t.contact.selectLoan}</option>
+                  {t.loanItems && t.loanItems.map((item, i) => <option key={i} value={item}>{item}</option>)}
                 </select>
               </div>
-              <div className="form-group">
-                <label className="form-label">{t.contact.state}</label>
-                <select className="form-ctrl"><option value="">{t.contact.selectState}</option>{stateOptions.map((s) => <option key={s}>{s}</option>)}</select>
+              <div className="form-row">
+                <div className="form-group">
+                  <label className="form-label">{t.contact.amountRange}</label>
+                  <select className="form-ctrl">
+                    <option value="">{t.contact.selectAmount}</option>
+                    <option>{t.contact.below10L}</option>
+                    <option>₹10L – ₹50L</option>
+                    <option>₹50L – ₹1Cr</option>
+                    <option>₹1Cr – ₹5Cr</option>
+                    <option>{t.contact.above5Cr}</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">{t.contact.state}</label>
+                  <select className="form-ctrl"><option value="">{t.contact.selectState}</option>{stateOptions.map((s) => <option key={s}>{s}</option>)}</select>
+                </div>
               </div>
-            </div>
-            <div className="form-group"><label className="form-label">{t.contact.msg}</label><textarea className="form-ctrl" placeholder={t.contact.msgPH} /></div>
-            <div className="form-notice">{t.contact.notice}</div>
-            <button type="submit" className="btn btn-primary btn-lg" style={{ padding: '14px 36px' }}>{t.contact.submit}</button>
-          </form>
+              <div className="form-group"><label className="form-label">{t.contact.msg}</label><textarea className="form-ctrl" placeholder={t.contact.msgPH} /></div>
+              <div className="form-notice">{t.contact.notice}</div>
+              <button type="submit" className="btn btn-primary btn-lg" style={{ padding: '14px 36px', marginTop: 'auto' }}>{t.contact.submit}</button>
+            </form>
+          </div>
         </div>
         <div>
+          <div className="label-tag" style={{ visibility: 'hidden' }}>.</div>
+          <h2 className="section-title" style={{ marginBottom: '24px' }}>{t.contact.office}</h2>
           <div className="info-card">
-            <div className="info-card-head">{t.contact.office}</div>
             <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">{t.contact.addrLbl}</div><div className="info-val">{t.contact.addr.split('\n').map((l, i) => <span key={i}>{l}{i < 2 ? <br/> : ''}</span>)}</div></div></div>
             <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">{t.contact.phoneLbl}</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
             <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">{t.contact.emailLbl}</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
@@ -272,7 +276,7 @@ export function ContactPage({ onNav }) {
             <a href="https://maps.google.com/?q=AKR+Corniche+Center+Second+Line+Beach+George+Town+Chennai" target="_blank" rel="noopener noreferrer" className="map-box" style={{ display: 'flex' }}>
               <span>{t.contact.viewMap}</span>
             </a>
-            <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: '14px' }}>{t.contact.waBtn}</a>
+            <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: 'auto' }}>{t.contact.waBtn}</a>
           </div>
         </div>
       </div>

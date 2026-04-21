@@ -50,7 +50,7 @@ export default function Navbar({ currentPage, onNav }) {
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
         <div className="nav-main">
           <div className="logo" onClick={() => onNav('home')}>
-            <img src={logo} alt="HelpLine Finance Logo" fetchPriority="high" loading="eager" decoding="async" style={{ width: '48px', height: '48px', objectFit: 'contain', background: 'transparent' }} />
+            <img src={logo} alt="HelpLine Finance Logo" fetchPriority="high" loading="eager" decoding="async" style={{ width: '48px', height: '48px', objectFit: 'contain', background: 'transparent', mixBlendMode: 'multiply' }} />
             <div className="logo-text">
               <div className="brand" style={{ color: '#1565C0', fontSize: '20px' }}>HelpLine</div>
               <div className="sub" style={{ color: '#666', fontSize: '14px', fontWeight: 600, marginTop: '-2px' }}>Finance</div>

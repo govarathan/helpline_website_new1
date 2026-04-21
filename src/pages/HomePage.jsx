@@ -100,7 +100,7 @@ function ContactForm({ t }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} id="home-contact-form">
+      <form onSubmit={handleSubmit} id="home-contact-form" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <div className="form-row">
           <div className="form-group">
             <label className="form-label">{t.contact.name} *</label>
@@ -142,7 +142,7 @@ function ContactForm({ t }) {
           </div>
         </div>
         <div className="form-notice">{t.contact.notice}</div>
-        <button type="submit" className="btn btn-primary btn-block" style={{ padding: '14px' }}>{t.contact.submit}</button>
+        <button type="submit" className="btn btn-primary btn-block" style={{ padding: '14px', marginTop: 'auto' }}>{t.contact.submit}</button>
       </form>
       <div id="toast" className={toast ? 'show' : ''}>{t.contact.toast}</div>
     </>
@@ -359,7 +359,7 @@ export default function HomePage({ onNav }) {
             <h2 className="section-title">{t.contact.title}</h2>
             <p className="section-desc">{t.contact.desc}</p>
           </div>
-          <div className="contact-grid">
+          <div className="contact-grid" style={{ marginTop: '90px' }}>
             <div data-sr>
               <ContactForm t={t} />
             </div>
