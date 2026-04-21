@@ -6,8 +6,14 @@ export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = useRef(null);
 
-  const [messages, setMessages] = useState([{ text: t.chatbot.welcome, sender: "bot" }]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    if (t?.chatbot?.welcome && messages.length === 0) {
+      setMessages([{ text: t.chatbot.welcome, sender: "bot" }]);
+    }
+  }, [t, messages.length]);
 
   // Sync welcome message when language changes
   useEffect(() => {
