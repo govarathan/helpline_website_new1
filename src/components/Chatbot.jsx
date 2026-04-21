@@ -1,28 +1,73 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useLang } from '../context/LangContext.jsx';
 
 export default function Chatbot() {
+  const { lang } = useLang();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { text: "Hi there! 👋 How can we help you with your financial needs today?", sender: "bot" }
-  ]);
+  const welcome = useMemo(() => (
+    lang === 'ta'
+      ? "வணக்கம்! 👋 கடன் வகை, வட்டி, ஆவணங்கள், CIBIL உதவி போன்றவற்றை கேளுங்கள்."
+      : lang === 'hi'
+        ? "नमस्ते! 👋 लोन प्रकार, ब्याज, दस्तावेज़ और CIBIL सहायता के बारे में पूछें।"
+        : "Hi there! 👋 Ask about loan types, interest rates, documents, and CIBIL support."
+  ), [lang]);
+  const [messages, setMessages] = useState([{ text: welcome, sender: "bot" }]);
   const [input, setInput] = useState("");
+  const suggestions = useMemo(() => (
+    lang === 'ta'
+      ? ["கடன் வகைகள்", "வட்டி விகிதம்", "தேவையான ஆவணங்கள்", "குறைந்த CIBIL உதவி", "ஆதரவை தொடர்பு கொள்ள"]
+      : lang === 'hi'
+        ? ["लोन प्रकार", "ब्याज दर", "ज़रूरी दस्तावेज़", "लो CIBIL सहायता", "सपोर्ट से बात करें"]
+        : ["Loan types", "Interest rates", "Required documents", "Low CIBIL help", "Talk to support"]
+  ), [lang]);
 
-  const handleSend = (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+  useEffect(() => {
+    setMessages([{ text: welcome, sender: "bot" }]);
+  }, [welcome]);
+
+  const getReply = (question) => {
+    const q = question.toLowerCase();
+    if (q.includes("interest") || q.includes("rate") || q.includes("வட்டி") || q.includes("ब्याज")) {
+      return "Interest rates depend on loan type, profile, and documents. We can guide you with an exact quote after a quick eligibility check.";
+    }
+    if (q.includes("document") || q.includes("paper") || q.includes("kyc") || q.includes("ஆவண") || q.includes("दस्तावेज")) {
+      return "Common documents: PAN, ID proof, address proof, bank statements, and income/business proof. Requirements change by product.";
+    }
+    if (q.includes("cibil") || q.includes("credit")) {
+      return "Yes, we support low CIBIL cases through suitable lenders. Share your profile and we will suggest available options.";
+    }
+    if ((q.includes("loan") && q.includes("type")) || q.includes("கடன் வக") || q.includes("लोन प्रकार")) {
+      return "We support Private Finance, Project Loan, NRI Loan, Investment Loan, Low CIBIL Loan, and Cheque Basis Loan.";
+    }
+    if (q.includes("support") || q.includes("call") || q.includes("contact") || q.includes("தொடர்பு") || q.includes("संपर्क")) {
+      return "You can call +91 809 809 6666 or use the Contact form. Our team usually responds within 2 business hours.";
+    }
+    if (q.includes("emi")) {
+      return "Use the EMI calculator on the home page. Adjust amount, rate, and tenure to get monthly EMI instantly.";
+    }
+    return "Thanks for your message. I can help with loan types, rates, documents, low CIBIL options, and application steps.";
+  };
+
+  const sendMessage = (text) => {
+    if (!text.trim()) return;
 
     // Add user message
-    const newMessages = [...messages, { text: input, sender: "user" }];
+    const newMessages = [...messages, { text, sender: "user" }];
     setMessages(newMessages);
     setInput("");
 
     // Simulate bot reply
     setTimeout(() => {
-      setMessages([...newMessages, { 
-        text: "Thank you for reaching out! A HelpLine Finance executive will be in touch with you shortly. For immediate assistance, call us at +91 809 809 6666.", 
+      setMessages([...newMessages, {
+        text: getReply(text),
         sender: "bot" 
       }]);
     }, 1000);
+  };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    sendMessage(input);
   };
 
   return (
@@ -191,6 +236,13 @@ export default function Chatbot() {
             <div key={idx} className={`chat-msg ${msg.sender}`}>
               {msg.text}
             </div>
+          ))}
+        </div>
+        <div className="chat-suggestions">
+          {suggestions.map((q) => (
+            <button key={q} type="button" className="suggestion-btn" onClick={() => sendMessage(q)}>
+              {q}
+            </button>
           ))}
         </div>
         <form className="chat-input-area" onSubmit={handleSend}>

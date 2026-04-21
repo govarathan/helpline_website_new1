@@ -50,7 +50,7 @@ export default function Navbar({ currentPage, onNav }) {
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
         <div className="nav-main">
           <div className="logo" onClick={() => onNav('home')}>
-            <img src={logo} alt="HelpLine Finance Logo" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
+            <img src={logo} alt="HelpLine Finance Logo" fetchPriority="high" loading="eager" decoding="async" style={{ width: '48px', height: '48px', objectFit: 'contain', background: 'transparent' }} />
             <div className="logo-text">
               <div className="brand" style={{ color: '#1565C0', fontSize: '20px' }}>HelpLine</div>
               <div className="sub" style={{ color: '#666', fontSize: '14px', fontWeight: 600, marginTop: '-2px' }}>Finance</div>
@@ -61,8 +61,8 @@ export default function Navbar({ currentPage, onNav }) {
             <span className={`nav-link${currentPage === 'home' ? ' active-link' : ''}`} onClick={() => navTo('home')}>{t.nav?.home || 'Home'}</span>
 
             <div className="nav-dd" ref={ddRef}>
-              <span className="nav-link" onClick={() => setDdOpen(!ddOpen)}>
-                {t.nav?.services || 'Services'} <span style={{ fontSize: '10px', marginLeft: '3px' }}>▾</span>
+              <span className="nav-link" onClick={() => setDdOpen(!ddOpen)} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                {t.nav?.services || 'Services'} <span style={{ fontSize: '10px', marginLeft: '3px', lineHeight: 1, position: 'relative', top: '-1px' }}>▾</span>
               </span>
               {ddOpen && (
                 <div className="dd-menu">
@@ -115,8 +115,8 @@ export default function Navbar({ currentPage, onNav }) {
           </div>
 
           <div className="nav-actions">
-            <button className="btn btn-gold btn-sm" onClick={() => navTo('partner')} style={{ marginRight: '8px' }}>🤝 {t.nav?.partner || 'Partner With Us'}</button>
-            <button className="btn btn-primary" onClick={() => navTo('contact')} style={{ marginLeft: '12px' }}>{t.nav?.apply || 'Apply Now'}</button>
+            <button className="btn btn-gold" onClick={() => navTo('partner')} style={{ marginRight: '8px', minWidth: '145px', height: '36px', padding: '0 16px' }}>🤝 {t.nav?.partner || 'Partner With Us'}</button>
+            <button className="btn btn-primary" onClick={() => navTo('contact')} style={{ marginLeft: '12px', minWidth: '145px', height: '36px', padding: '0 16px' }}>{t.nav?.apply || 'Apply Now'}</button>
           </div>
 
           <button className="hamburger" onClick={() => setMobileOpen(true)}>
