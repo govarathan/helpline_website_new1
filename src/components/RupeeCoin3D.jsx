@@ -32,104 +32,100 @@ export default function RupeeCoin3D() {
       rendererRef.current = renderer;
       container.appendChild(renderer.domElement);
 
-      // --- 2. High-Res Canvas Textures (Smoother Embossing) ---
-      const createCoinTexture = (isFlipped = false) => {
-        const c = document.createElement('canvas');
-        c.width = 1024; c.height = 1024;
-        const ctx = c.getContext('2d');
+      // --- 2. Professional Typographic Rupee Symbol (₹) ---
+      // Standard SVG Path: M4 3.06h2.726c1.22 0 2.12.575 2.325 1.724H4v1.051h5.051C8.855 7.001 8 7.558 6.788 7.558H4v1.317L8.437 14h2.11L6.095 8.884h.855c2.316-.018 3.465-1.476 3.688-3.049H12V4.784h-1.345c-.08-.778-.357-1.335-.793-1.732H12V2H4z
+      const symbolShape = new THREE.Shape();
+      const s = 0.14; // Reduced scale factor for a more elegant, centered look
+      const sx = (v) => (v - 8) * s;
+      const sy = (v) => (8 - v) * s;
 
-        // Gold background
-        ctx.fillStyle = '#D4AF37';
-        ctx.fillRect(0, 0, 1024, 1024);
+      symbolShape.moveTo(sx(4), sy(3.06));
+      symbolShape.lineTo(sx(6.726), sy(3.06));
+      symbolShape.bezierCurveTo(sx(7.946), sy(3.06), sx(8.846), sy(3.635), sx(9.051), sy(4.784));
+      symbolShape.lineTo(sx(4), sy(4.784));
+      symbolShape.lineTo(sx(4), sy(5.835));
+      symbolShape.lineTo(sx(9.051), sy(5.835));
+      symbolShape.bezierCurveTo(sx(8.855), sy(7.001), sx(8), sy(7.558), sx(6.788), sy(7.558));
+      symbolShape.lineTo(sx(4), sy(7.558));
+      symbolShape.lineTo(sx(4), sy(8.875));
+      symbolShape.lineTo(sx(8.437), sy(14));
+      symbolShape.lineTo(sx(10.547), sy(14));
+      symbolShape.lineTo(sx(6.095), sy(8.884));
+      symbolShape.lineTo(sx(6.95), sy(8.884));
+      symbolShape.bezierCurveTo(sx(9.266), sy(8.866), sx(10.415), sy(7.408), sx(10.638), sy(5.835));
+      symbolShape.lineTo(sx(12), sy(5.835));
+      symbolShape.lineTo(sx(12), sy(4.784));
+      symbolShape.lineTo(sx(10.655), sy(4.784));
+      symbolShape.bezierCurveTo(sx(10.575), sy(4.006), sx(10.298), sy(3.449), sx(9.862), sy(3.052));
+      symbolShape.lineTo(sx(12), sy(3.052));
+      symbolShape.lineTo(sx(12), sy(2));
+      symbolShape.lineTo(sx(4), sy(2));
+      symbolShape.closePath();
 
-        // Subtle grooves - REMOVED for smoother surface around symbol
-        /*
-        ctx.strokeStyle = 'rgba(0,0,0,0.1)';
-        ctx.lineWidth = 2;
-        for (let r = 50; r < 512; r += 15) {
-          ctx.beginPath(); ctx.arc(512, 512, r, 0, Math.PI * 2); ctx.stroke();
-        }
-        */
-
-        // Draw "₹" symbol
-        ctx.save();
-        ctx.translate(512, 512);
-        ctx.rotate(-Math.PI / 2);
-        
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 500px "Arial", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        
-        // Reduced shadow blur for cleaner bump mapping (less "grainy")
-        ctx.shadowColor = 'rgba(0,0,0,0.4)';
-        ctx.shadowBlur = 10;
-        ctx.fillText('₹', 0, 0);
-        ctx.restore();
-
-        return c;
+      const extrudeSettings = { 
+        depth: 0.12, 
+        bevelEnabled: true, 
+        bevelThickness: 0.005, 
+        bevelSize: 0.005, 
+        bevelSegments: 4 
       };
-
-      const frontCanvas = createCoinTexture(false);
-      const backCanvas = createCoinTexture(true);
-
-      const frontTex = new THREE.CanvasTexture(frontCanvas);
-      const backTex = new THREE.CanvasTexture(backCanvas);
       
-      // Max anisotropy for oblique smoothness
-      frontTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-      backTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      const symbolGeo = new THREE.ExtrudeGeometry(symbolShape, extrudeSettings);
+      symbolGeo.center();
 
-      // --- 3. Premium Gold Material (MeshPhysicalMaterial for Glassy Smoothness) ---
-      const commonProps = {
-        metalness: 1.0,
-        roughness: 0.05,
+      // --- 3. Material Strategy: Polished vs Satin Contrast ---
+      const polishedMat = new THREE.MeshPhysicalMaterial({ 
+        color: 0xD4AF37, 
+        metalness: 1.0, 
+        roughness: 0.02, // Ultra polished
         clearcoat: 1.0,
-        clearcoatRoughness: 0.03,
-        bumpScale: 0.04, // Reduced scale for a more elegant, subtle embossing
-      };
-
-      const coinFaceMatFront = new THREE.MeshPhysicalMaterial({
-        ...commonProps,
-        map: frontTex,
-        bumpMap: frontTex,
+        envMapIntensity: 2.5
       });
 
-      const coinFaceMatBack = new THREE.MeshPhysicalMaterial({
-        ...commonProps,
-        map: backTex,
-        bumpMap: backTex,
+      const satinMat = new THREE.MeshPhysicalMaterial({ 
+        color: 0xD4AF37, 
+        metalness: 1.0, 
+        roughness: 0.4, // Satin/Matte for contrast
+        clearcoat: 0.2,
+        envMapIntensity: 1.5
       });
 
-      const coinEdgeMat = new THREE.MeshPhysicalMaterial({
-        color: 0xD4AF37,
-        metalness: 1.0,
-        roughness: 0.03,
-        clearcoat: 1.0,
-      });
-
-      // --- 4. Build the Coin Group (Higher Segments for Smooth Edges) ---
+      // --- 4. Build the Coin Group ---
       const coinGroup = new THREE.Group();
       scene.add(coinGroup);
 
-      const coinGeo = new THREE.CylinderGeometry(1.5, 1.5, 0.22, 256, 1);
-      const coinMesh = new THREE.Mesh(coinGeo, [
-        coinEdgeMat,      // Side
-        coinFaceMatFront, // Top (Front)
-        coinFaceMatBack,  // Bottom (Back)
-      ]);
-      
+      const bodyGeo = new THREE.CylinderGeometry(1.5, 1.5, 0.22, 256, 1);
+      // Sides are polished, faces are satin
+      const coinMesh = new THREE.Mesh(bodyGeo, [polishedMat, satinMat, satinMat]);
       coinMesh.rotation.x = Math.PI / 2;
       coinGroup.add(coinMesh);
 
-      // --- 5. Virtual Studio Environment ---
+      // Polished Bevel Rings
+      const ringGeo = new THREE.TorusGeometry(1.44, 0.02, 16, 100);
+      const ringFront = new THREE.Mesh(ringGeo, polishedMat);
+      ringFront.position.z = 0.11;
+      coinGroup.add(ringFront);
+      const ringBack = ringFront.clone();
+      ringBack.position.z = -0.11;
+      coinGroup.add(ringBack);
+
+      // Polished Physical Symbols (High Relief)
+      const frontSymbol = new THREE.Mesh(symbolGeo, polishedMat);
+      frontSymbol.position.z = 0.11;
+      coinGroup.add(frontSymbol);
+
+      const backSymbol = new THREE.Mesh(symbolGeo, polishedMat);
+      backSymbol.position.z = -0.11;
+      backSymbol.rotation.y = Math.PI; // Flip correctly
+      coinGroup.add(backSymbol);
+
+      // --- 6. Virtual Studio Environment ---
       const pmremGenerator = new THREE.PMREMGenerator(renderer);
       const envScene = new THREE.Scene();
-      const whiteLight = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-      whiteLight.position.set(0, 20, 15); whiteLight.lookAt(0,0,0); envScene.add(whiteLight);
-      
-      const yellowLight = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), new THREE.MeshBasicMaterial({ color: 0xFFD700 }));
-      yellowLight.position.set(15, -15, 10); yellowLight.lookAt(0,0,0); envScene.add(yellowLight);
+      const whiteSoftbox = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      whiteSoftbox.position.set(0, 20, 15); whiteSoftbox.lookAt(0,0,0); envScene.add(whiteSoftbox);
+      const goldSoftbox = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), new THREE.MeshBasicMaterial({ color: 0xFFD700 }));
+      goldSoftbox.position.set(20, -15, 10); goldSoftbox.lookAt(0,0,0); envScene.add(goldSoftbox);
 
       const envMap = pmremGenerator.fromScene(envScene).texture;
       scene.environment = envMap;
@@ -139,16 +135,13 @@ export default function RupeeCoin3D() {
       keyLight.position.set(5, 5, 10);
       scene.add(keyLight);
 
-      // --- 6. Animation ---
+      // --- 7. Animation ---
       const animate = () => {
         if (!mounted) return;
         animRef.current = requestAnimationFrame(animate);
-        
-        coinGroup.rotation.y += 0.015;
-        
+        coinGroup.rotation.y += 0.015; // Vertical flip spin
         const t = Date.now() * 0.001;
-        coinGroup.rotation.x = Math.sin(t * 0.7) * 0.15;
-        
+        coinGroup.rotation.x = Math.sin(t * 0.7) * 0.15; // Subtle tilt
         renderer.render(scene, cam);
       };
       animate();
@@ -163,9 +156,8 @@ export default function RupeeCoin3D() {
 
       return () => {
         window.removeEventListener('resize', onResize);
-        coinGeo.dispose();
-        coinFaceMatFront.dispose(); coinFaceMatBack.dispose(); coinEdgeMat.dispose();
-        frontTex.dispose(); backTex.dispose();
+        bodyGeo.dispose(); symbolGeo.dispose(); ringGeo.dispose();
+        goldMat.dispose(); faceMat.dispose(); faceTex.dispose();
         pmremGenerator.dispose(); envMap.dispose();
         renderer.dispose();
       };
