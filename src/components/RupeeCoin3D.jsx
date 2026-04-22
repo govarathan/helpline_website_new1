@@ -24,7 +24,7 @@ export default function RupeeCoin3D() {
       const W = container.clientWidth || 420;
       const H = container.clientHeight || 420;
       const cam = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
-      cam.position.z = 4.8;
+      cam.position.z = 6.5;
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(W, H);
