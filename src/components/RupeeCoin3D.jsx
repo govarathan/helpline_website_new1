@@ -7,200 +7,153 @@ export default function RupeeCoin3D() {
 
   useEffect(() => {
     let mounted = true;
+    let scene, cam, renderer, coin;
+    let geo, ringGeo, materials, ringMat, symbolTex;
+    let symbolFront, symbolBack, fShadow, bShadow;
 
-    const init = () => {
-      if (!mounted) return;
-
-      // Wait for THREE to be available
-      if (!window.THREE || !mountRef.current) {
-        setTimeout(init, 100);
-        return;
-      }
+    const start = () => {
+      if (!mounted || !mountRef.current || !window.THREE) return;
 
       const THREE = window.THREE;
       const container = mountRef.current;
+      
+      const W = container.clientWidth || 400;
+      const H = container.clientHeight || 400;
 
-      // Clear any existing content
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
+      scene = new THREE.Scene();
+      cam = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
+      cam.position.z = 5;
 
-      // Scene
-      const scene = new THREE.Scene();
-      const W = 420, H = 420;
-      const cam = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-      cam.position.z = 3.8;
-
-      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(W, H);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
       rendererRef.current = renderer;
       container.appendChild(renderer.domElement);
 
-      // Face texture
-      const fc = document.createElement('canvas');
-      fc.width = 512; fc.height = 512;
-      const fctx = fc.getContext('2d');
+      const goldMat = new THREE.MeshStandardMaterial({ 
+        color: 0xD4AF37, 
+        metalness: 0.9, 
+        roughness: 0.1 
+      });
 
-      // Gold radial gradient
-      const grad = fctx.createRadialGradient(256, 256, 20, 256, 256, 256);
-      grad.addColorStop(0, '#F5D060');
-      grad.addColorStop(0.45, '#D4AF37');
-      grad.addColorStop(0.75, '#C09A25');
-      grad.addColorStop(1, '#8B6914');
-      fctx.fillStyle = grad;
-      fctx.beginPath();
-      fctx.arc(256, 256, 256, 0, Math.PI * 2);
-      fctx.fill();
-
-      // Outer ring
-      fctx.beginPath();
-      fctx.arc(256, 256, 235, 0, Math.PI * 2);
-      fctx.strokeStyle = 'rgba(250, 213, 3, 1)';
-      fctx.lineWidth = 8;
-      fctx.stroke();
-
-      // Inner ring
-      fctx.beginPath();
-      fctx.arc(256, 256, 215, 0, Math.PI * 2);
-      fctx.strokeStyle = 'rgba(139,105,20,0.4)';
-      fctx.lineWidth = 3;
-      fctx.stroke();
-
-      // Arc text removed as requested
-      fctx.restore();
-
-      fctx.save();
-      fctx.translate(256, 256); // Center of the canvas
-      fctx.rotate(-Math.PI / 2); // 90 degrees counter-clockwise to make it upright
-      fctx.translate(0, 12); // Minor font baseline correction after rotation
-
-      fctx.font = 'bold 300px "Inter", Arial, sans-serif';
-      fctx.fillStyle = '#fac801ff';
-      fctx.textAlign = 'center';
-      fctx.textBaseline = 'middle';
-
-      fctx.fillText('₹', 0, 0);
-      fctx.restore();
-
-      // Glow behind symbol
-      const glow = fctx.createRadialGradient(256, 256, 10, 256, 256, 110);
-      glow.addColorStop(0, 'rgba(240,200,74,0.3)');
-      glow.addColorStop(1, 'rgba(240,200,74,0)');
-      fctx.fillStyle = glow;
-      fctx.beginPath();
-      fctx.arc(256, 256, 110, 0, Math.PI * 2);
-      fctx.fill();
-
-      // Edge texture
-      const ec = document.createElement('canvas');
-      ec.width = 512; ec.height = 64;
-      const ectx = ec.getContext('2d');
-      const egrad = ectx.createLinearGradient(0, 0, 512, 0);
-      egrad.addColorStop(0, '#8B6914');
-      egrad.addColorStop(0.25, '#D4AF37');
-      egrad.addColorStop(0.5, '#F5D060');
-      egrad.addColorStop(0.75, '#D4AF37');
-      egrad.addColorStop(1, '#8B6914');
-      ectx.fillStyle = egrad;
-      ectx.fillRect(0, 0, 512, 64);
-
-      // Edge grooves
-      for (let i = 0; i < 36; i++) {
-        const x = (i / 36) * 512;
-        ectx.fillStyle = 'rgba(0,0,0,0.12)';
-        ectx.fillRect(x, 0, 3, 64);
-      }
-
-      const faceTex = new THREE.CanvasTexture(fc);
-      const edgeTex = new THREE.CanvasTexture(ec);
-      const geo = new THREE.CylinderGeometry(1.2, 1.2, 0.18, 64);
-
-      const materials = [
-        new THREE.MeshStandardMaterial({ map: edgeTex, metalness: 0.95, roughness: 0.05 }),
-        new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.88, roughness: 0.08 }),
-        new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.88, roughness: 0.08 }),
-      ];
-
-      const coin = new THREE.Mesh(geo, materials);
+      // Bigger Coin Geometry
+      geo = new THREE.CylinderGeometry(1.8, 1.8, 0.25, 64);
+      coin = new THREE.Mesh(geo, goldMat);
       coin.rotation.x = Math.PI / 2;
       scene.add(coin);
 
-      // Lights
-      const ambLight = new THREE.AmbientLight(0xffffff, 1.4);
-      scene.add(ambLight);
-      const keyLight = new THREE.PointLight(0xFFFFFF, 3.5, 20);
-      keyLight.position.set(3, 4, 5);
-      scene.add(keyLight);
-      const fillLight = new THREE.PointLight(0xFFD700, 2.0, 18);
-      fillLight.position.set(-3, 1, 4);
-      scene.add(fillLight);
-      const rimLight = new THREE.PointLight(0xFFD700, 2.0, 14);
-      rimLight.position.set(0, -3, -3);
-      scene.add(rimLight);
-      const topLight = new THREE.PointLight(0x87CEEB, 1.0, 15);
-      topLight.position.set(0, 5, 2);
-      scene.add(topLight);
+      // Inner rings for physical depth
+      ringGeo = new THREE.CylinderGeometry(1.4, 1.4, 0.05, 64);
+      ringMat = new THREE.MeshStandardMaterial({ color: 0xb8860b, metalness: 0.8, roughness: 0.2 });
+      const r1 = new THREE.Mesh(ringGeo, ringMat);
+      r1.position.y = 0.126;
+      coin.add(r1);
+      const r2 = new THREE.Mesh(ringGeo, ringMat);
+      r2.position.y = -0.126;
+      coin.add(r2);
 
-      // Particles
-      const pgeo = new THREE.BufferGeometry();
-      const ppos = new Float32Array(300 * 3);
-      for (let i = 0; i < 300; i++) {
-        const r = 1.8 + Math.random() * 0.8;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = (Math.random() - 0.5) * Math.PI * 0.6;
-        ppos[i * 3] = r * Math.cos(theta) * Math.cos(phi);
-        ppos[i * 3 + 1] = r * Math.sin(phi);
-        ppos[i * 3 + 2] = r * Math.sin(theta) * Math.cos(phi);
-      }
-      pgeo.setAttribute('position', new THREE.BufferAttribute(ppos, 3));
-      const particles = new THREE.Points(pgeo, new THREE.PointsMaterial({ color: 0xFFD700, size: 0.012, transparent: true, opacity: 0.5 }));
-      scene.add(particles);
+      // Single non-mirrored high-res symbol
+      const createSymbolCanvas = () => {
+        const c = document.createElement('canvas');
+        c.width = 512; c.height = 512;
+        const ctx = c.getContext('2d');
+        ctx.font = 'bold 420px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#fac801';
+        ctx.fillText('₹', 256, 256);
+        return c;
+      };
 
-      let t = 0;
-      function animate() {
+      symbolTex = new THREE.CanvasTexture(createSymbolCanvas());
+      symbolTex.anisotropy = 4;
+      
+      const symbolPlaneGeo = new THREE.PlaneGeometry(2.0, 2.0);
+      const symbolMat = new THREE.MeshStandardMaterial({ 
+        map: symbolTex, 
+        transparent: true, 
+        metalness: 0.95, 
+        roughness: 0.05 
+      });
+
+      // Shadow Material for 'extruded' effect
+      const symbolShadowMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.5, map: symbolTex });
+
+      // Front
+      fShadow = new THREE.Mesh(symbolPlaneGeo, symbolShadowMat);
+      fShadow.position.set(0.03, 0.155, 0.03); // Offset for physical depth look
+      fShadow.rotation.x = -Math.PI / 2;
+      coin.add(fShadow);
+
+      symbolFront = new THREE.Mesh(symbolPlaneGeo, symbolMat);
+      symbolFront.position.y = 0.16;
+      symbolFront.rotation.x = -Math.PI / 2;
+      coin.add(symbolFront);
+
+      // Back - Properly fixed inversion using scale.x = -1
+      bShadow = new THREE.Mesh(symbolPlaneGeo, symbolShadowMat);
+      bShadow.position.set(0.03, -0.155, 0.03);
+      bShadow.rotation.x = Math.PI / 2;
+      bShadow.scale.x = -1; // Mirror un-inverts
+      coin.add(bShadow);
+
+      symbolBack = new THREE.Mesh(symbolPlaneGeo, symbolMat);
+      symbolBack.position.y = -0.16;
+      symbolBack.rotation.x = Math.PI / 2;
+      symbolBack.scale.x = -1; // Mirror un-inverts
+      coin.add(symbolBack);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      const dl = new THREE.DirectionalLight(0xffffff, 1.8);
+      dl.position.set(10, 10, 10);
+      scene.add(dl);
+
+      const onResize = () => {
+        if (!mountRef.current || !renderer || !cam) return;
+        const nW = mountRef.current.clientWidth;
+        const nH = mountRef.current.clientHeight;
+        renderer.setSize(nW, nH);
+        cam.aspect = nW / nH;
+        cam.updateProjectionMatrix();
+      };
+      window.addEventListener('resize', onResize);
+
+      const animate = () => {
         if (!mounted) return;
         animRef.current = requestAnimationFrame(animate);
-        t += 0.015;
-        coin.rotation.z += 0.006;
-        coin.position.x = Math.sin(t * 0.7) * 0.09;
-        particles.rotation.x += 0.003;
-        keyLight.position.y = Math.cos(t * 0.3) * 3.5;
-        keyLight.position.z = Math.sin(t * 0.3) * 4.5;
+        coin.rotation.z += 0.008;
         renderer.render(scene, cam);
-      }
+      };
       animate();
+
+      return () => {
+        window.removeEventListener('resize', onResize);
+        // Resource Cleanup
+        geo.dispose();
+        ringGeo.dispose();
+        symbolPlaneGeo.dispose();
+        goldMat.dispose();
+        ringMat.dispose();
+        symbolMat.dispose();
+        symbolShadowMat.dispose();
+        symbolTex.dispose();
+        renderer.dispose();
+      };
     };
 
-    init();
+    const timer = setTimeout(start, 50);
 
     return () => {
       mounted = false;
+      clearTimeout(timer);
       if (animRef.current) cancelAnimationFrame(animRef.current);
-      if (rendererRef.current) {
-        rendererRef.current.dispose();
-        if (rendererRef.current.domElement && rendererRef.current.domElement.parentNode) {
-          rendererRef.current.domElement.parentNode.removeChild(rendererRef.current.domElement);
-        }
-      }
     };
   }, []);
 
   return (
     <div
       ref={mountRef}
-      aria-label="Animated gold Indian Rupee coin"
-      role="img"
-      style={{
-        width: 420,
-        height: 420,
-        filter: 'drop-shadow(0 20px 60px rgba(212,175,55,0.4)) drop-shadow(0 4px 20px rgba(0,0,0,0.3))',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0
-      }}
+      style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     />
   );
 }

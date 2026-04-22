@@ -200,7 +200,7 @@ export default function HomePage({ onNav }) {
               {coin3DReady ? (
                 <RupeeCoin3D />
               ) : (
-                <div style={{ width: 380, height: 380, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ fontSize: '60px', color: 'var(--gold)', animation: 'spin 1s linear infinite' }}>₹</div>
                 </div>
               )}
