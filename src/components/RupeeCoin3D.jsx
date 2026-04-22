@@ -32,7 +32,7 @@ export default function RupeeCoin3D() {
       rendererRef.current = renderer;
       container.appendChild(renderer.domElement);
 
-      // --- 2. High-Res Canvas Textures (Corrected Orientation) ---
+      // --- 2. High-Res Canvas Textures (Smoother Embossing) ---
       const createCoinTexture = (isFlipped = false) => {
         const c = document.createElement('canvas');
         c.width = 1024; c.height = 1024;
@@ -42,29 +42,28 @@ export default function RupeeCoin3D() {
         ctx.fillStyle = '#D4AF37';
         ctx.fillRect(0, 0, 1024, 1024);
 
-        // Subtle grooves
+        // Subtle grooves - REMOVED for smoother surface around symbol
+        /*
         ctx.strokeStyle = 'rgba(0,0,0,0.1)';
         ctx.lineWidth = 2;
         for (let r = 50; r < 512; r += 15) {
           ctx.beginPath(); ctx.arc(512, 512, r, 0, Math.PI * 2); ctx.stroke();
         }
+        */
 
-        // Draw "₹" symbol - Rotated to be upright on the Cylinder cap
+        // Draw "₹" symbol
         ctx.save();
         ctx.translate(512, 512);
-        
-        // Correct rotation for Cylinder UV mapping
         ctx.rotate(-Math.PI / 2);
         
-        // Removed manual isFlipped scaling which caused mirroring
-
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 500px "Arial", sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         
+        // Reduced shadow blur for cleaner bump mapping (less "grainy")
         ctx.shadowColor = 'rgba(0,0,0,0.4)';
-        ctx.shadowBlur = 25;
+        ctx.shadowBlur = 10;
         ctx.fillText('₹', 0, 0);
         ctx.restore();
 
@@ -76,42 +75,50 @@ export default function RupeeCoin3D() {
 
       const frontTex = new THREE.CanvasTexture(frontCanvas);
       const backTex = new THREE.CanvasTexture(backCanvas);
+      
+      // Max anisotropy for oblique smoothness
+      frontTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      backTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-      // --- 3. Premium Gold Material ---
-      const coinFaceMatFront = new THREE.MeshStandardMaterial({
-        map: frontTex,
-        bumpMap: frontTex,
-        bumpScale: 0.12,
-        metalness: 1.0,
-        roughness: 0.1,
-      });
-
-      const coinFaceMatBack = new THREE.MeshStandardMaterial({
-        map: backTex,
-        bumpMap: backTex,
-        bumpScale: 0.12,
-        metalness: 1.0,
-        roughness: 0.1,
-      });
-
-      const coinEdgeMat = new THREE.MeshStandardMaterial({
-        color: 0xD4AF37,
+      // --- 3. Premium Gold Material (MeshPhysicalMaterial for Glassy Smoothness) ---
+      const commonProps = {
         metalness: 1.0,
         roughness: 0.05,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.03,
+        bumpScale: 0.04, // Reduced scale for a more elegant, subtle embossing
+      };
+
+      const coinFaceMatFront = new THREE.MeshPhysicalMaterial({
+        ...commonProps,
+        map: frontTex,
+        bumpMap: frontTex,
       });
 
-      // --- 4. Build the Coin Group (Proper Spin Axis) ---
+      const coinFaceMatBack = new THREE.MeshPhysicalMaterial({
+        ...commonProps,
+        map: backTex,
+        bumpMap: backTex,
+      });
+
+      const coinEdgeMat = new THREE.MeshPhysicalMaterial({
+        color: 0xD4AF37,
+        metalness: 1.0,
+        roughness: 0.03,
+        clearcoat: 1.0,
+      });
+
+      // --- 4. Build the Coin Group (Higher Segments for Smooth Edges) ---
       const coinGroup = new THREE.Group();
       scene.add(coinGroup);
 
-      const coinGeo = new THREE.CylinderGeometry(1.5, 1.5, 0.22, 128, 1);
+      const coinGeo = new THREE.CylinderGeometry(1.5, 1.5, 0.22, 256, 1);
       const coinMesh = new THREE.Mesh(coinGeo, [
         coinEdgeMat,      // Side
         coinFaceMatFront, // Top (Front)
         coinFaceMatBack,  // Bottom (Back)
       ]);
       
-      // Rotate mesh so face points at camera (Local Y becomes World Z)
       coinMesh.rotation.x = Math.PI / 2;
       coinGroup.add(coinMesh);
 
@@ -132,15 +139,13 @@ export default function RupeeCoin3D() {
       keyLight.position.set(5, 5, 10);
       scene.add(keyLight);
 
-      // --- 6. Animation (Flipping like a real coin) ---
+      // --- 6. Animation ---
       const animate = () => {
         if (!mounted) return;
         animRef.current = requestAnimationFrame(animate);
         
-        // Spin around vertical axis (Flipping left to right)
         coinGroup.rotation.y += 0.015;
         
-        // Elegant tilt to catch light
         const t = Date.now() * 0.001;
         coinGroup.rotation.x = Math.sin(t * 0.7) * 0.15;
         
