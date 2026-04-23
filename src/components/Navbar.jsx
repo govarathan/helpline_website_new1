@@ -51,9 +51,9 @@ export default function Navbar({ currentPage, onNav }) {
         <div className="nav-main">
           <div className="logo" onClick={() => onNav('home')}>
             <img src={logo} alt="HelpLine Finance Logo" fetchPriority="high" loading="eager" decoding="async" style={{ width: '48px', height: '48px', objectFit: 'contain', background: 'transparent', mixBlendMode: 'multiply' }} />
-            <div className="logo-text">
-              <div className="brand" style={{ color: '#1565C0', fontSize: '20px' }}>HelpLine</div>
-              <div className="sub" style={{ color: '#666', fontSize: '14px', fontWeight: 600, marginTop: '-2px' }}>Finance</div>
+            <div className="logo-text" style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+              <div className="brand" style={{ color: '#1565C0', fontSize: '20px', fontWeight: 700 }}>HelpLine</div>
+              <div className="brand" style={{ color: '#666', fontSize: '18px', fontWeight: 600 }}>Finance</div>
             </div>
           </div>
 

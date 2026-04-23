@@ -140,8 +140,6 @@ export default function RupeeCoin3D() {
         if (!mounted) return;
         animRef.current = requestAnimationFrame(animate);
         coinGroup.rotation.y += 0.015; // Vertical flip spin
-        const t = Date.now() * 0.001;
-        coinGroup.rotation.x = Math.sin(t * 0.7) * 0.15; // Subtle tilt
         renderer.render(scene, cam);
       };
       animate();
