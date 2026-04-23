@@ -191,14 +191,16 @@ export default function HomePage({ onNav }) {
           </div>
 
           <div className="hero-right">
-            <div className="coin-wrap">
+            <div className="coin-wrap" style={{ width: '100%', maxWidth: '420px', height: '100%', aspectRatio: '1/1', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div className="coin-rings">
                 <div className="c-ring cr1"></div>
                 <div className="c-ring cr2"></div>
                 <div className="c-ring cr3"></div>
               </div>
               {coin3DReady ? (
-                <RupeeCoin3D />
+                <div style={{ width: '100%', height: '100%' }}>
+                  <RupeeCoin3D />
+                </div>
               ) : (
                 <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ fontSize: '60px', color: 'var(--gold)', animation: 'spin 1s linear infinite' }}>₹</div>

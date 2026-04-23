@@ -128,11 +128,11 @@ export default function Navbar({ currentPage, onNav }) {
       {/* Mobile nav */}
       <div className={`mob-nav${mobileOpen ? ' open' : ''}`}>
         <button className="mob-close" onClick={() => setMobileOpen(false)}>✕</button>
-        <div className="logo" style={{ marginBottom: '28px' }}>
-          <div className="logo-icon">₹</div>
+        <div className="logo" style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div className="logo-icon" style={{ background: 'var(--gold)', color: 'white', borderRadius: '10px', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 700 }}>₹</div>
           <div className="logo-text">
-            <div className="brand" style={{ color: 'white' }}>HelpLine Finance</div>
-            <div className="sub" style={{ color: 'rgba(255,255,255,.45)' }}>Private Limited</div>
+            <div className="brand" style={{ color: 'white', fontSize: '18px', fontWeight: 700 }}>HelpLine</div>
+            <div className="sub" style={{ color: 'rgba(255,255,255,.45)', fontSize: '14px', fontWeight: 600 }}>Finance</div>
           </div>
         </div>
         {[
