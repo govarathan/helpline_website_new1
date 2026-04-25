@@ -92,7 +92,7 @@ export function AboutPage({ onNav }) {
           <div style={{ maxWidth: '500px', margin: '24px auto 0' }}>
             <div className="info-card" style={{ textAlign: 'left' }}>
               <div className="info-card-head">HelpLine Finance Private Limited</div>
-              <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">AKR Corniche Center No.30/11<br/>Second Line Beach, George Town<br/>Chennai – 600 001</div></div></div>
+              <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">AKR Corniche Center No.30/11<br />Second Line Beach, George Town<br />Chennai – 600 001</div></div></div>
               <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">Phone</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
               <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">Email</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
               <button className="btn btn-gold btn-block" onClick={() => onNav('contact')} style={{ marginTop: '14px' }}>Get in Touch →</button>
@@ -183,12 +183,31 @@ export function PartnerPage({ onNav }) {
             <div className="partner-form-wrap">
               <h3>Organiser Registration</h3>
               <form onSubmit={handleSubmit}>
-                {[['Full Name', 'text', 'Your full name', true], ['Company Name', 'text', 'Your company / organisation', false], ['Email Address', 'email', 'your@email.com', true], ['Contact Number', 'tel', '10-digit mobile', true], ['Location', 'text', 'City, State', true]].map(([l, t, ph, req]) => (
+                {[
+                  ['Full Name', 'text', 'Your full name', true, 'name'],
+                  ['Company Name', 'text', 'Your company / organisation', false, 'company'],
+                  ['Email Address', 'email', 'your@email.com', true, 'email'],
+                  ['Contact Number', 'tel', '10-digit mobile', true, 'phone'],
+                  ['Location', 'text', 'City, State', true, 'location']
+                ].map(([l, t_field, ph, req, key]) => (
                   <div key={l} className="form-group">
                     <label className="form-label">{l}{req ? ' *' : ''}</label>
-                    <input className="form-ctrl" type={t} placeholder={ph} required={req} pattern={t === 'tel' ? '[6-9][0-9]{9}' : undefined} />
+                    <input 
+                      className="form-ctrl" 
+                      type={t_field} 
+                      placeholder={ph} 
+                      required={req} 
+                      list={key === 'location' ? 'city-list' : undefined}
+                      pattern={t_field === 'tel' ? '[6-9][0-9]{9}' : undefined} 
+                      onInput={key === 'location' ? (e) => {
+                        e.target.value = e.target.value.replace(/[^a-zA-Z0-9\u0900-\u097F\u0B80-\u0BFF ,]/g, '');
+                      } : undefined}
+                    />
                   </div>
                 ))}
+                <datalist id="city-list">
+                  {(t.common.cities || []).map(city => <option key={city} value={city} />)}
+                </datalist>
                 <button type="submit" className="btn btn-primary btn-block" style={{ padding: '14px', marginTop: '8px' }}>Register as Organiser →</button>
               </form>
               {toast && <div className="toast-inline" style={{ marginTop: '16px', padding: '12px', background: 'var(--sky-50)', borderRadius: '8px', color: 'var(--sky-800)', fontWeight: 600, fontSize: '13px' }}>✓ Registration received! We'll contact you shortly.</div>}
@@ -229,9 +248,7 @@ export function ContactPage({ onNav }) {
               <label className="form-label">{t.contact.loanType} *</label>
               <select className="form-ctrl" required>
                 <option value="">{t.contact.selectLoan}</option>
-                <option>Private Finance</option><option>Project Loan</option><option>NRI Loans</option>
-                <option>Investment Loan</option><option>Low CIBIL Loan</option><option>Cheque Basis Loan</option>
-                <option>Private Recovery</option><option>DRT Legal Services</option><option>Other / General Enquiry</option>
+                {t.loanItems && t.loanItems.map((item, i) => <option key={i} value={item}>{item}</option>)}
               </select>
             </div>
             <div className="form-row">
@@ -252,11 +269,11 @@ export function ContactPage({ onNav }) {
         <div>
           <div className="info-card">
             <div className="info-card-head">Our Office</div>
-            <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">AKR Corniche Center No.30/11<br/>Second Line Beach, George Town<br/>Chennai – 600 001</div></div></div>
+            <div className="info-item"><div className="info-icon">📍</div><div><div className="info-lbl">Address</div><div className="info-val">AKR Corniche Center No.30/11<br />Second Line Beach, George Town<br />Chennai – 600 001</div></div></div>
             <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">Phone</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
             <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">Email</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
-            <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">Hours</div><div className="info-val">Mon–Sat: 9:00 AM – 6:00 PM<br/>Response within 2 business hours</div></div></div>
-            <a href="https://maps.google.com/?q=AKR+Corniche+Center+Second+Line+Beach+George+Town+Chennai" target="_blank" rel="noopener noreferrer" className="map-box" style={{ display: 'flex' }}>
+            <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">Hours</div><div className="info-val">Mon–Sat: 9:00 AM – 6:00 PM<br />Response within 2 business hours</div></div></div>
+            <a href="https://maps.app.goo.gl/NVoGQhny5LnbzRj97" target="_blank" rel="noopener noreferrer" className="map-box" style={{ display: 'flex' }}>
               <span>📍 View on Google Maps →</span>
             </a>
             <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: '14px' }}>💬 WhatsApp Us Now</a>
@@ -287,12 +304,12 @@ export function PrivacyPage({ onNav }) {
       <PageHero title="Privacy Policy" subtitle="How we collect, use, and protect your personal information." breadcrumbs={[{ label: 'Privacy Policy' }]} onNav={onNav} />
       <section className="section"><div className="wrap" style={{ maxWidth: '760px' }}>
         {[['What Data We Collect', 'We collect name, phone number, email address, loan type preference, and loan amount range when you submit an enquiry through our website. We do not collect Aadhaar numbers. We do not collect PAN numbers through our website enquiry forms.'],
-          ['How We Use Your Data', 'Your data is used solely to process your loan enquiry — to contact you, match you with appropriate financiers, and provide the services you requested. We do not use your data for unrelated marketing without your consent.'],
-          ['DPDP Act 2023 Compliance', 'HelpLine Finance Private Limited complies with the Digital Personal Data Protection (DPDP) Act 2023. You have the right to access, correct, and request deletion of your personal data. Contact us at helplineprivatefinance@gmail.com to exercise these rights.'],
-          ['Data Sharing', 'We share your information with our network of financial institutions and private financiers solely for the purpose of processing your loan enquiry. We do not sell your data to third parties. We do not share your data for advertising or profiling purposes.'],
-          ['Data Retention', 'We retain your data for as long as necessary to process your enquiry and comply with legal obligations. You may request deletion of your data at any time by emailing helplineprivatefinance@gmail.com.'],
-          ['Cookies & Analytics', 'Our website uses no third-party advertising cookies. We may use basic analytics to understand site usage. No personal data is shared with analytics providers.'],
-          ['Contact for Privacy Matters', 'For any privacy-related concerns, data access requests, or deletion requests, please contact: helplineprivatefinance@gmail.com | +91 809 809 6666']
+        ['How We Use Your Data', 'Your data is used solely to process your loan enquiry — to contact you, match you with appropriate financiers, and provide the services you requested. We do not use your data for unrelated marketing without your consent.'],
+        ['DPDP Act 2023 Compliance', 'HelpLine Finance Private Limited complies with the Digital Personal Data Protection (DPDP) Act 2023. You have the right to access, correct, and request deletion of your personal data. Contact us at helplineprivatefinance@gmail.com to exercise these rights.'],
+        ['Data Sharing', 'We share your information with our network of financial institutions and private financiers solely for the purpose of processing your loan enquiry. We do not sell your data to third parties. We do not share your data for advertising or profiling purposes.'],
+        ['Data Retention', 'We retain your data for as long as necessary to process your enquiry and comply with legal obligations. You may request deletion of your data at any time by emailing helplineprivatefinance@gmail.com.'],
+        ['Cookies & Analytics', 'Our website uses no third-party advertising cookies. We may use basic analytics to understand site usage. No personal data is shared with analytics providers.'],
+        ['Contact for Privacy Matters', 'For any privacy-related concerns, data access requests, or deletion requests, please contact: helplineprivatefinance@gmail.com | +91 809 809 6666']
         ].map(([h, b]) => (
           <div key={h} style={{ marginBottom: '32px' }}>
             <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '20px', color: 'var(--sky-900)', marginBottom: '10px', fontWeight: 700 }}>{h}</h2>
@@ -311,11 +328,11 @@ export function TermsPage({ onNav }) {
       <PageHero title="Terms of Service" subtitle="Terms and conditions for using HelpLine Finance services." breadcrumbs={[{ label: 'Terms of Service' }]} onNav={onNav} />
       <section className="section"><div className="wrap" style={{ maxWidth: '760px' }}>
         {[['Nature of Service', 'HelpLine Finance Private Limited is a financial intermediary and loan broker. We are NOT a bank, NBFC, or direct lender. We connect borrowers with our network of private financiers, banks, and NBFCs. Submitting an enquiry is not an application for credit and does not guarantee loan approval.'],
-          ['No Guarantee of Approval', 'Submitting a lead form or enquiry on our website does not constitute a loan application or guarantee of approval. All credit decisions are made solely by the lending institution or private financier. HelpLine Finance facilitates the connection; we do not approve or reject loans.'],
-          ['Indicative Rates', 'All interest rates, processing fees, and other financial figures mentioned on this website are indicative and for reference purposes only. Actual rates will vary based on loan type, collateral, creditworthiness, lender policies, and prevailing market conditions.'],
-          ['Jurisdiction', 'These terms are governed by the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of courts in Chennai, Tamil Nadu.'],
-          ['Amendments', 'HelpLine Finance reserves the right to modify these terms at any time. Continued use of our services constitutes acceptance of revised terms.'],
-          ['Contact', 'For queries regarding these terms: helplineprivatefinance@gmail.com | +91 809 809 6666 | AKR Corniche Center No.30/11, Second Line Beach, George Town, Chennai – 600 001.']
+        ['No Guarantee of Approval', 'Submitting a lead form or enquiry on our website does not constitute a loan application or guarantee of approval. All credit decisions are made solely by the lending institution or private financier. HelpLine Finance facilitates the connection; we do not approve or reject loans.'],
+        ['Indicative Rates', 'All interest rates, processing fees, and other financial figures mentioned on this website are indicative and for reference purposes only. Actual rates will vary based on loan type, collateral, creditworthiness, lender policies, and prevailing market conditions.'],
+        ['Jurisdiction', 'These terms are governed by the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of courts in Chennai, Tamil Nadu.'],
+        ['Amendments', 'HelpLine Finance reserves the right to modify these terms at any time. Continued use of our services constitutes acceptance of revised terms.'],
+        ['Contact', 'For queries regarding these terms: helplineprivatefinance@gmail.com | +91 809 809 6666 | AKR Corniche Center No.30/11, Second Line Beach, George Town, Chennai – 600 001.']
         ].map(([h, b]) => (
           <div key={h} style={{ marginBottom: '32px' }}>
             <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '20px', color: 'var(--sky-900)', marginBottom: '10px', fontWeight: 700 }}>{h}</h2>

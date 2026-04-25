@@ -4,22 +4,22 @@ export const translations = {
     flag: "🇬🇧",
     nav: { home: "Home", services: "Services", about: "About Us", documents: "Documents", partner: "Partner With Us", contact: "Contact", apply: "Apply Now", whatsapp: "WhatsApp", language: "Language" },
     hero: { eyebrow: "Trusted Since 2017", h1_1: "Your Dream.", h1_2: "Our Finance.", desc: "HelpLine Finance helps micro, small and medium enterprises across Tamil Nadu, Pondicherry, Karnataka and Kerala access credit with minimal procedures and competitive interest rates.", cta1: "Apply Now →", cta2: "💬 WhatsApp Us Now", trust1: "🔒 Secure & Safe", trust2: "⚡ 48hr Approval", trust3: "✅ No Hidden Charges", trust4: "🏛 RBI Compliant" },
-    about: { 
-      label: "About HelpLine Finance", 
-      title: "Serving MSME India Since 2017", 
-      p1: "Help Line Finance started in 2017 and is focused on meeting the financial needs of micro, small, and medium enterprises (MSME) in India. It is run by experts with rich experience in the financial services industry, aiming to make credit accessible and create a positive impact on the lives of millions of Indians.", 
-      p2: "We are committed to providing sustainable financing solutions through our extensive network of private financiers, ensuring fairness and service quality in every transaction.", 
-      f1t: "Minimal Procedures", f1d: "Fast disbursement, minimal paperwork", 
-      f2t: "No Security", f2d: "Loans without any security requirement", 
-      f3t: "Best Rates", f3d: "Captivating and competitive interest rates", 
-      f4t: "Fast Processing", f4d: "Less processing time for quick credit", 
+    about: {
+      label: "About HelpLine Finance",
+      title: "Serving MSME India Since 2017",
+      p1: "Help Line Finance started in 2017 and is focused on meeting the financial needs of micro, small, and medium enterprises (MSME) in India. It is run by experts with rich experience in the financial services industry, aiming to make credit accessible and create a positive impact on the lives of millions of Indians.",
+      p2: "We are committed to providing sustainable financing solutions through our extensive network of private financiers, ensuring fairness and service quality in every transaction.",
+      f1t: "Minimal Procedures", f1d: "Fast disbursement, minimal paperwork",
+      f2t: "No Security", f2d: "Loans without any security requirement",
+      f3t: "Best Rates", f3d: "Captivating and competitive interest rates",
+      f4t: "Fast Processing", f4d: "Less processing time for quick credit",
       vision: "To be recognized by fairness, a responsible approach, and service quality as the most admired company in the inclusive financing space by all stakeholders.",
       mission: "To make a difference and create a positive impact in the lives of millions of informal customers of micro, small, and medium enterprises in India through sustainable financing solutions.",
       values: "Empowerment: Providing finance to the underserved. Transparency: At all levels with all stakeholders. Fairness: Focus on alignment of long-term interests.",
       vTitle: "Vision", mTitle: "Mission", valTitle: "Values",
       foundation: "Our Foundation", vmv: "Vision, Mission & Values",
       office: "Registered Office", location: "Where We Are",
-      btn: "Know More →", panelTitle: "Key Features", panelCta: "Get Free Consultation →" 
+      btn: "Know More →", panelTitle: "Key Features", panelCta: "Get Free Consultation →"
     },
     partner: {
       title: "Partner With HelpLine Finance",
@@ -106,8 +106,9 @@ export const translations = {
       }
     },
     nav_cat: { lending: "Lending", recovery: "Recovery & Legal", resources: "Resources" },
+    loanItems: ["Private Finance", "Project Loan Specialist", "NRI Loans", "Investment Loans", "Low CIBIL Score Loan", "Cheque Basis Loan", "Private Recovery Work", "DRT Legal Services", "Other"],
     footer: { tagline: "Trusted financial intermediary since 2017", quickLinks: "Quick Links", services2: "Services", contactInfo: "Contact", copy: "© 2017–2026 HelpLine Finance Private Limited. All Rights Reserved.", privacy: "Privacy Policy", terms: "Terms of Service" },
-    common: { home: "Home", services: "Services", enquire: "Enquire Now →", wa: "💬 WhatsApp Us", note: "Note:", scroll: "Scroll", years: "Years", other: "Other", states: ["Tamil Nadu", "Pondicherry", "Karnataka", "Kerala"] },
+    common: { home: "Home", services: "Services", enquire: "Enquire Now →", wa: "💬 WhatsApp Us", note: "Note:", scroll: "Scroll", years: "Years", other: "Other", states: ["Tamil Nadu", "Pondicherry", "Karnataka", "Kerala"], cities: ["Mumbai", "Delhi", "Bengaluru", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", "Pune", "Jaipur", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara", "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot", "Kalyan-Dombivli", "Vasai-Virar", "Varanasi", "Srinagar", "Aurangabad", "Dhanbad", "Amritsar", "Navi Mumbai", "Prayagraj", "Howrah", "Ranchi", "Jabalpur", "Gwalior", "Vijayawada", "Jodhpur", "Madurai", "Raipur", "Kota", "Chandigarh", "Guwahati", "Solapur", "Hubballi-Dharwad", "Bareilly", "Mysore", "Tiruchirappalli", "Aligarh", "Tiruppur", "Gurgaon", "Moradabad", "Jalandhar", "Bhubaneswar", "Salem", "Warangal", "Guntur", "Bhiwandi", "Saharanpur", "Gorakhpur", "Bikaner", "Amravati", "Noida", "Jamshedpur", "Bhilai", "Cuttack", "Firozabad", "Kochi", "Nellore", "Bhavnagar", "Dehradun", "Durgapur", "Asansol", "Rourkela", "Nanded", "Kolhapur", "Ajmer", "Akola", "Gulbarga", "Jamnagar", "Ujjain", "Loni", "Siliguri", "Jhansi", "Ulhasnagar", "Jammu", "Sangli-Miraj & Kupwad", "Mangalore", "Erode", "Belgaum", "Ambattur", "Tirunelveli", "Malegaon", "Gaya", "Jalgaon", "Udaipur", "Maheshtala"] },
     pf: {
       subtitle: "Unsecured and secured loans for MSME businesses with fast processing.",
       s1: "Without Security (Unsecured)",
@@ -274,21 +275,21 @@ export const translations = {
     name: "தமிழ்", flag: "🇮🇳",
     nav: { home: "முகப்பு", services: "சேவைகள்", about: "எங்களைப் பற்றி", documents: "ஆவணங்கள்", partner: "பங்காளியாகுங்கள்", contact: "தொடர்பு", apply: "விண்ணப்பி", whatsapp: "WhatsApp", language: "மொழி" },
     hero: { eyebrow: "2017 முதல் நம்பகமான", h1_1: "உங்கள் கனவு.", h1_2: "எங்கள் நிதி.", desc: "HelpLine Finance தமிழ்நாடு, புதுச்சேரி, கர்நாடகா மற்றும் கேரளாவில் உள்ள MSME நிறுவனங்களுக்கு கடன் வழங்குகிறது.", cta1: "இப்போது விண்ணப்பி →", cta2: "💬 WhatsApp செய்யுங்கள்", trust1: "🔒 பாதுகாப்பானது", trust2: "⚡ 48 மணி நேரத்தில்", trust3: "✅ மறைக்கப்பட்ட கட்டணம் இல்லை", trust4: "🏛 RBI இணக்கமான" },
-    about: { 
-      label: "எங்களைப் பற்றி", 
-      title: "2017 முதல் MSME இந்தியாவிற்கு சேவை", 
-      p1: "ஹெல்ப் லைன் ஃபைனான்ஸ் 2017 இல் தொடங்கப்பட்டது மற்றும் இந்தியாவின் குறு, சிறு மற்றும் நடுத்தர நிறுவனங்களின் (MSME) நிதித் தேவைகளைப் பூர்த்தி செய்வதில் கவனம் செலுத்துகிறது.", 
-      p2: "நிதிச் சேவைத் துறையில் சிறந்த அனுபவம் வாய்ந்த நிபுணர்களால் நடத்தப்படும் நாங்கள், கடனை அணுகக்கூடியதாக மாற்றுவதையும் மில்லியன் கணக்கான இந்தியர்களின் வாழ்க்கையில் நேர்மறையான தாக்கத்தை ஏற்படுத்துவதையும் நோக்கமாகக் கொண்டுள்ளோம்.", 
-      f1t: "குறைந்த நடைமுறைகள்", f1d: "விரைவான விநியோகம், குறைந்த ஆவணங்கள்", 
-      f2t: "பிணையம் தேவையில்லை", f2d: "எந்த பாதுகாப்பும் இல்லாமல் கடன்கள்", 
-      f3t: "சிறந்த வட்டி", f3d: "கவர்ச்சிகரமான மற்றும் போட்டி வட்டி விகிதங்கள்", 
-      f4t: "விரைவான செயலாக்கம்", f4d: "குறுகிய நேரத்தில் கடன் வசதி", 
+    about: {
+      label: "எங்களைப் பற்றி",
+      title: "2017 முதல் MSME இந்தியாவிற்கு சேவை",
+      p1: "ஹெல்ப் லைன் ஃபைனான்ஸ் 2017 இல் தொடங்கப்பட்டது மற்றும் இந்தியாவின் குறு, சிறு மற்றும் நடுத்தர நிறுவனங்களின் (MSME) நிதித் தேவைகளைப் பூர்த்தி செய்வதில் கவனம் செலுத்துகிறது.",
+      p2: "நிதிச் சேவைத் துறையில் சிறந்த அனுபவம் வாய்ந்த நிபுணர்களால் நடத்தப்படும் நாங்கள், கடனை அணுகக்கூடியதாக மாற்றுவதையும் மில்லியன் கணக்கான இந்தியர்களின் வாழ்க்கையில் நேர்மறையான தாக்கத்தை ஏற்படுத்துவதையும் நோக்கமாகக் கொண்டுள்ளோம்.",
+      f1t: "குறைந்த நடைமுறைகள்", f1d: "விரைவான விநியோகம், குறைந்த ஆவணங்கள்",
+      f2t: "பிணையம் தேவையில்லை", f2d: "எந்த பாதுகாப்பும் இல்லாமல் கடன்கள்",
+      f3t: "சிறந்த வட்டி", f3d: "கவர்ச்சிகரமான மற்றும் போட்டி வட்டி விகிதங்கள்",
+      f4t: "விரைவான செயலாக்கம்", f4d: "குறுகிய நேரத்தில் கடன் வசதி",
       vision: "அனைத்து பங்குதாரர்களாலும் உள்ளடக்கிய நிதித் துறையில் மிகவும் போற்றப்படும் நிறுவனமாக நேர்மை, பொறுப்பான அணுகுமுறை மற்றும் சேவைத் தரம் ஆகியவற்றால் அங்கீகரிக்கப்பட வேண்டும்.",
       mission: "நிலையான நிதித் தீர்வுகள் மூலம் இந்தியாவின் குறு, சிறு மற்றும் நடுத்தர நிறுவனங்களின் மில்லியன் கணக்கான முறைசாரா வாடிக்கையாளர்களின் வாழ்க்கையில் மாற்றத்தை ஏற்படுத்தவும் நேர்மறையான தாக்கத்தை உருவாக்கவும் பாடுபடுகிறோம்.",
       values: "அதிகாரம் அளித்தல்: பின்தங்கியவர்களுக்கு நிதி வழங்குதல். வெளிப்படைத்தன்மை: அனைத்து நிலைகளிலும் வெளிப்படைத்தன்மை. நேர்மை: நீண்ட கால நலன்களில் கவனம் செலுத்துதல்.",
       foundation: "எங்கள் அடித்தளம்", vmv: "தொலைநோக்கு, பணி & மதிப்புகள்",
       office: "பதிவு செய்யப்பட்ட அலுவலகம்", location: "நாங்கள் எங்கே இருக்கிறோம்",
-      btn: "மேலும் அறிய →", panelTitle: "முக்கிய அம்சங்கள்", panelCta: "இலவச ஆலோசனை பெறுங்கள் →" 
+      btn: "மேலும் அறிய →", panelTitle: "முக்கிய அம்சங்கள்", panelCta: "இலவச ஆலோசனை பெறுங்கள் →"
     },
     partner: {
       title: "HelpLine Finance உடன் இணையுங்கள்",
@@ -377,7 +378,7 @@ export const translations = {
     nav_cat: { lending: "கடன் சேவைகள்", recovery: "மீட்பு மற்றும் சட்டம்", resources: "ஆதாரங்கள்" },
     loanItems: ["தனியார் நிதி", "திட்ட கடன்", "NRI கடன்", "முதலீட்டு கடன்", "குறைந்த CIBIL கடன்", "காசோலை அடிப்படை கடன்", "தனியார் மீட்பு", "DRT சட்ட சேவை", "மற்றவை"],
     footer: { tagline: "2017 முதல் நம்பகமான நிதி மத்தியஸ்தர்", quickLinks: "விரைவு இணைப்புகள்", services2: "சேவைகள்", contactInfo: "தொடர்பு", copy: "© 2017–2026 HelpLine Finance. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.", privacy: "தனியுரிமை கொள்கை", terms: "சேவை விதிமுறைகள்" },
-    common: { home: "முகப்பு", services: "சேவைகள்", enquire: "இப்போது கேளுங்கள் →", wa: "💬 WhatsApp", note: "குறிப்பு:", scroll: "ஸ்க்ரோல்", years: "ஆண்டுகள்", other: "மற்றவை", states: ["தமிழ்நாடு", "புதுச்சேரி", "கர்நாடகா", "கேரளா"] },
+    common: { home: "முகப்பு", services: "சேவைகள்", enquire: "இப்போது கேளுங்கள் →", wa: "💬 WhatsApp", note: "குறிப்பு:", scroll: "ஸ்க்ரோல்", years: "ஆண்டுகள்", other: "மற்றவை", states: ["தமிழ்நாடு", "புதுச்சேரி", "கர்நாடகா", "கேரளா"], cities: ["மும்பை", "டெல்லி", "பெங்களூரு", "ஹைதராபாத்", "அகமதாபாத்", "சென்னை", "கொல்கத்தா", "சூரத்", "புனே", "ஜெய்ப்பூர்", "லக்னோ", "கான்பூர்", "நாக்பூர்", "இந்தூர்", "தானே", "போபால்", "விசாகப்பட்டினம்", "பாட்னா", "வதோதரா", "காசியாபாத்", "லூதியானா", "ஆக்ரா", "நாசிக்", "பரிதாபாத்", "மீரட்", "ராஜ்கோட்", "வாரணாசி", "ஸ்ரீநகர்", "அவுரங்காபாத்", "தன்பாத்", "அமிர்தசரஸ்", "நவி மும்பை", "ராஞ்சி", "ஜபல்பூர்", "குவாலியர்", "விஜயவாடா", "ஜோத்பூர்", "மதுரை", "ராய்பூர்", "கோட்டா", "சண்டிகர்", "குவஹாத்தி", "சோலாப்பூர்", "மைசூர்", "திருச்சிராப்பள்ளி", "திருப்பூர்", "குர்கான்", "ஜலந்தர்", "புவனேஸ்வர்", "சேலம்", "வாரங்கல்", "குண்டூர்", "சகாரன்பூர்", "கோரக்பூர்", "பிகானேர்", "அமராவதி", "நொய்டா", "ஜாம்ஷெட்பூர்", "பிலாய்", "கட்டாக்", "கொச்சி", "நெல்லூர்", "பவநகர்", "டேராடூன்", "துர்காபூர்", "அசன்சோல்", "ரூர்கேலா", "நாந்தேடு", "கோலாப்பூர்", "அஜ்மீர்", "அகோலா", "குல்பர்கா", "ஜாம்நகர்", "உஜ்ஜைன்", "சிலிகுரி", "ஜான்சி", "ஜம்மு", "மங்களூர்", "ஈரோடு", "பெல்காம்", "திருநெல்வேலி", "கயா", "ஜல்கான்", "உதய்ப்பூர்"] },
     pf: {
       subtitle: "MSME வணிகங்களுக்கு பாதுகாப்பில்லா மற்றும் பாதுகாப்பு கடன்கள்.",
       s1: "பிணையமின்றி (Unsecured)",
@@ -544,21 +545,21 @@ export const translations = {
     name: "हिंदी", flag: "🇮🇳",
     nav: { home: "होम", services: "सेवाएं", about: "हमारे बारे में", documents: "दस्तावेज़", partner: "साझेदार बनें", contact: "संपर्क", apply: "आवेदन करें", whatsapp: "WhatsApp", language: "भाषा" },
     hero: { eyebrow: "2017 से विश्वसनीय", h1_1: "आपका सपना।", h1_2: "हमारा वित्त।", desc: "HelpLine Finance तमिलनाडु, पुदुच्चेरी, कर्नाटक और केरल में MSME उद्यमों को ऋण प्रदान करता है।", cta1: "अभी आवेदन करें →", cta2: "💬 WhatsApp करें", trust1: "🔒 सुरक्षित", trust2: "⚡ 48 घंटे में", trust3: "✅ कोई छिपे शुल्क नहीं", trust4: "🏛 RBI अनुपालित" },
-    about: { 
-      label: "हमारे बारे में", 
-      title: "2017 से MSME भारत की सेवा", 
-      p1: "हेल्प लाइन फाइनेंस 2017 में शुरू हुआ और भारत में सूक्ष्म, लघु और मध्यम उद्यमों (MSME) की वित्तीय जरूरतों को पूरा करने पर केंद्रित है।", 
-      p2: "वित्तीय सेवा उद्योग में समृद्ध अनुभव वाले विशेषज्ञों द्वारा संचालित, हमारा उद्देश्य ऋण को सुलभ बनाना और लाखों भारतीयों के जीवन पर सकारात्मक प्रभाव डालना है।", 
-      f1t: "न्यूनतम प्रक्रियाएं", f1d: "तेज़ वितरण, न्यूनतम कागजी कार्रवाई", 
-      f2t: "कोई सुरक्षा नहीं", f2d: "बिना किसी सुरक्षा आवश्यकता के ऋण", 
-      f3t: "सर्वश्रेष्ठ दरें", f3d: "आकर्षक और प्रतिस्पर्धी ब्याज दरें", 
-      f4t: "त्वरित प्रसंस्करण", f4d: "त्वरित ऋण के लिए कम प्रसंस्करण समय", 
+    about: {
+      label: "हमारे बारे में",
+      title: "2017 से MSME भारत की सेवा",
+      p1: "हेल्प लाइन फाइनेंस 2017 में शुरू हुआ और भारत में सूक्ष्म, लघु और मध्यम उद्यमों (MSME) की वित्तीय जरूरतों को पूरा करने पर केंद्रित है।",
+      p2: "वित्तीय सेवा उद्योग में समृद्ध अनुभव वाले विशेषज्ञों द्वारा संचालित, हमारा उद्देश्य ऋण को सुलभ बनाना और लाखों भारतीयों के जीवन पर सकारात्मक प्रभाव डालना है।",
+      f1t: "न्यूनतम प्रक्रियाएं", f1d: "तेज़ वितरण, न्यूनतम कागजी कार्रवाई",
+      f2t: "कोई सुरक्षा नहीं", f2d: "बिना किसी सुरक्षा आवश्यकता के ऋण",
+      f3t: "सर्वश्रेष्ठ दरें", f3d: "आकर्षक और प्रतिस्पर्धी ब्याज दरें",
+      f4t: "त्वरित प्रसंस्करण", f4d: "त्वरित ऋण के लिए कम प्रसंस्करण समय",
       vision: "सभी हितधारकों द्वारा समावेशी वित्तपोषण क्षेत्र में निष्पक्षता, जिम्मेदार दृष्टिकोण और सेवा गुणवत्ता के लिए सबसे प्रशंसित कंपनी के रूप में पहचाना जाना।",
       mission: "स्थायी वित्तपोषण समाधानों के माध्यम से भारत में सूक्ष्म, लघु और मध्यम उद्यमों के लाखों अनौपचारिक ग्राहकों के जीवन में बदलाव लाना और सकारात्मक प्रभाव डालना।",
       values: "सशक्तिकরণ: वंचितों को वित्त प्रदान करना। पारदर्शिता: सभी हितधारकों के साथ सभी स्तरों पर। निष्पक्षता: दीर्घकालिक हितों के संरेखण पर ध्यान।",
       foundation: "हमारी नींव", vmv: "दृष्टि, मिशन और मूल्य",
       office: "पंजीकृत कार्यालय", location: "हम कहाँ हैं",
-      btn: "और जानें →", panelTitle: "प्रमुख विशेषताएं", panelCta: "मुफ्त परामर्श पाएं →" 
+      btn: "और जानें →", panelTitle: "प्रमुख विशेषताएं", panelCta: "मुफ्त परामर्श पाएं →"
     },
     partner: {
       title: "HelpLine Finance के साथ भागीदार बनें",
@@ -647,7 +648,7 @@ export const translations = {
     nav_cat: { lending: "ऋण सेवाएं", recovery: "वसूली और कानूनी", resources: "संसाधन" },
     loanItems: ["प्राइवेट फाइनेंस", "प्रोजेक्ट लोन", "NRI लोन", "इन्वेस्टमेंट लोन", "लो CIBIL लोन", "चेक बेसिस लोन", "प्राइवेट रिकवरी", "DRT लीगल सर्विस", "अन्य"],
     footer: { tagline: "2017 से विश्वसनीय वित्तीय मध्यस्थ", quickLinks: "त्वरित लिंक", services2: "सेवाएं", contactInfo: "संपर्क", copy: "© 2017–2026 HelpLine Finance. सर्वाधिकार सुरक्षित।", privacy: "गोपनीयता नीति", terms: "सेवा की शर्तें" },
-    common: { home: "होम", services: "सेवाएं", enquire: "अभी पूछें →", wa: "💬 WhatsApp", note: "नोट:", scroll: "स्क्रॉल", years: "वर्ष", other: "अन्य", states: ["तमिलनाडु", "पुडुचेरी", "कर्नाटक", "केरल"] },
+    common: { home: "होम", services: "सेवाएं", enquire: "अभी पूछें →", wa: "💬 WhatsApp", note: "नोट:", scroll: "स्क्रॉल", years: "वर्ष", other: "अन्य", states: ["तमिलनाडु", "पुडुचेरी", "कर्नाटक", "केरल"], cities: ["मुंबई", "दिल्ली", "बेंगलुरु", "हैदराबाद", "अहमदाबाद", "चेन्नई", "कोलकाता", "सूरत", "पुणे", "जयपुर", "लखनऊ", "कानपुर", "नागपुर", "इंदौर", "ठाणे", "भोपाल", "विशाखापत्तनम", "पटना", "वड़ोदरा", "गाजियाबाद", "लुधियाना", "आगरा", "नाशिक", "फरीदाबाद", "मेरठ", "राजकोट", "वाराणसी", "श्रीनगर", "औरंगाबाद", "धनबाद", "अमृतसर", "नवी मुंबई", "रांची", "जबलपुर", "ग्वालियर", "विजयवाड़ा", "जोधपुर", "मधुरै", "रायपुर", "कोटा", "चंडीगढ़", "गुवाहाटी", "सोलापुर", "मैसूर", "तिरुचिरापल्ली", "तिरुपुर", "गुड़गांव", "जालंधर", "भुवनेश्वर", "सलेम", "वारंगल", "गुंटूर", "सहारनपुर", "गोरखपुर", "बीकानेर", "अमरावती", "नोएडा", "जमशेदपुर", "भिलाई", "कटक", "कोच्चि", "नेल्लोर", "भावनगर", "देहरादून", "दुर्गापुर", "आसनसोल", "राउरकेला", "नांदेड़", "कोल्हापुर", "अजमेर", "अकोला", "गुलबर्गा", "जामनगर", "उज्जैन", "सिलीगुड़ी", "झांसी", "जम्मू", "मंगलौर", "इरोड", "बेलगाम", "तिरुनेलवेली", "गया", "जलगाँव", "उदयपुर"] },
     pf: {
       subtitle: "MSME व्यवसायों के लिए unsecured और secured लोन।",
       s1: "बिना सिक्योरिटी (Unsecured)",

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLang } from '../context/LangContext.jsx';
 
 function PageHero({ title, subtitle, breadcrumbs, onNav }) {
@@ -160,11 +160,25 @@ export function DocumentsPage({ onNav }) {
 export function PartnerPage({ onNav }) {
   const { t } = useLang();
   const [toast, setToast] = useState(false);
+  const [loc, setLoc] = useState('');
+  const [showLoc, setShowLoc] = useState(false);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setShowLoc(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const formT = t.partner.form || {
     name: 'Full Name', company: 'Company Name', email: 'Email Address', phone: 'Contact Number', loc: 'Location',
     namePH: 'Your full name', compPH: 'Your company / organisation', emailPH: 'your@email.com', phonePH: '10-digit mobile', locPH: 'City, State'
   };
-  const handleSubmit = (e) => { e.preventDefault(); setToast(true); e.target.reset(); setTimeout(() => setToast(false), 3600); };
+  const handleSubmit = (e) => { e.preventDefault(); setToast(true); e.target.reset(); setLoc(''); setTimeout(() => setToast(false), 3600); };
   return (
     <div>
       <PageHero title={t.partner.title} subtitle={t.partner.subtitle} breadcrumbs={[{ label: t.nav?.partner || 'Partner With Us' }]} onNav={onNav} />
@@ -189,15 +203,60 @@ export function PartnerPage({ onNav }) {
               <h3>{t.partner.formTitle}</h3>
               <form onSubmit={handleSubmit}>
                 {[
-                  [formT.name, 'text', formT.namePH, true],
-                  [formT.company, 'text', formT.compPH, false],
-                  [formT.email, 'email', formT.emailPH, true],
-                  [formT.phone, 'tel', formT.phonePH, true],
-                  [formT.loc, 'text', formT.locPH, true]
-                ].map(([l, t_field, ph, req]) => (
-                  <div key={l} className="form-group">
+                  [formT.name, 'text', formT.namePH, true, 'name'],
+                  [formT.company, 'text', formT.compPH, false, 'company'],
+                  [formT.email, 'email', formT.emailPH, true, 'email'],
+                  [formT.phone, 'tel', formT.phonePH, true, 'phone'],
+                  [formT.loc, 'custom_loc', formT.locPH, true, 'location']
+                ].map(([l, t_field, ph, req, key]) => (
+                  <div key={l} className="form-group" style={key === 'location' ? { position: 'relative' } : undefined} ref={key === 'location' ? wrapperRef : undefined}>
                     <label className="form-label">{l}{req ? ' *' : ''}</label>
-                    <input className="form-ctrl" type={t_field} placeholder={ph} required={req} pattern={t_field === 'tel' ? '[6-9][0-9]{9}' : undefined} />
+                    {t_field === 'custom_loc' ? (
+                      <>
+                        <input 
+                          className="form-ctrl" 
+                          type="text" 
+                          placeholder={ph} 
+                          required={req} 
+                          value={loc}
+                          onChange={(e) => {
+                            setLoc(e.target.value.replace(/[^a-zA-Z0-9\u0900-\u097F\u0B80-\u0BFF ,]/g, ''));
+                            setShowLoc(true);
+                          }}
+                          onFocus={() => setShowLoc(true)}
+                        />
+                        {showLoc && (
+                          <div style={{
+                            position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10,
+                            background: 'white', border: '1px solid var(--border)', borderRadius: 'var(--r-md)',
+                            maxHeight: '200px', overflowY: 'auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginTop: '4px'
+                          }}>
+                            {(t.common.cities || []).filter(c => c.toLowerCase().includes(loc.toLowerCase())).map(city => (
+                              <div 
+                                key={city} 
+                                style={{ padding: '10px 15px', cursor: 'pointer', borderBottom: '1px solid var(--grey-50)', fontSize: '13.5px', color: 'var(--text)' }}
+                                onMouseDown={(e) => { e.preventDefault(); setLoc(city); setShowLoc(false); }}
+                                onMouseEnter={(e) => e.target.style.background = 'var(--grey-50)'}
+                                onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                              >
+                                {city}
+                              </div>
+                            ))}
+                            {(t.common.cities || []).filter(c => c.toLowerCase().includes(loc.toLowerCase())).length === 0 && (
+                              <div style={{ padding: '10px 15px', color: 'var(--text-muted)', fontSize: '13.5px' }}>No cities found</div>
+                            )}
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <input 
+                        className="form-ctrl" 
+                        type={t_field} 
+                        placeholder={ph} 
+                        required={req} 
+                        pattern={t_field === 'tel' ? '[6-9][0-9]{9}' : undefined} 
+                      />
+                    )}
                   </div>
                 ))}
                 <button type="submit" className="btn btn-primary btn-block" style={{ padding: '14px', marginTop: '8px' }}>{t.partner.submit}</button>
@@ -273,7 +332,7 @@ export function ContactPage({ onNav }) {
             <div className="info-item"><div className="info-icon">📞</div><div><div className="info-lbl">{t.contact.phoneLbl}</div><div className="info-val"><a href="tel:8098096666">+91 809 809 6666</a></div></div></div>
             <div className="info-item"><div className="info-icon">✉️</div><div><div className="info-lbl">{t.contact.emailLbl}</div><div className="info-val"><a href="mailto:helplineprivatefinance@gmail.com">helplineprivatefinance@gmail.com</a></div></div></div>
             <div className="info-item"><div className="info-icon">🕐</div><div><div className="info-lbl">{t.contact.hoursLbl}</div><div className="info-val">{t.contact.hours}</div></div></div>
-            <a href="https://maps.google.com/?q=AKR+Corniche+Center+Second+Line+Beach+George+Town+Chennai" target="_blank" rel="noopener noreferrer" className="map-box" style={{ display: 'flex' }}>
+            <a href="https://maps.app.goo.gl/NVoGQhny5LnbzRj97" target="_blank" rel="noopener noreferrer" className="map-box" style={{ display: 'flex' }}>
               <span>{t.contact.viewMap}</span>
             </a>
             <a href="https://wa.me/918098096666" target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-block" style={{ marginTop: 'auto' }}>{t.contact.waBtn}</a>
